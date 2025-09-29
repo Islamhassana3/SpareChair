@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Container,
   Grid,
@@ -34,7 +34,7 @@ const ListingsPage: React.FC = () => {
     maxPrice: '',
   });
 
-  const fetchListings = async () => {
+  const fetchListings = useCallback(async () => {
     try {
       setLoading(true);
       const params = {
@@ -50,11 +50,11 @@ const ListingsPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, filters]);
 
   useEffect(() => {
     fetchListings();
-  }, [page]);
+  }, [page, fetchListings]);
 
   const handleFilterChange = (name: string, value: string) => {
     setFilters({ ...filters, [name]: value });
@@ -70,7 +70,7 @@ const ListingsPage: React.FC = () => {
       {/* Search and Filters */}
       <Box sx={{ mb: 4 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               fullWidth
               placeholder="Search spaces..."
@@ -85,7 +85,7 @@ const ListingsPage: React.FC = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid size={{ xs: 12, md: 2 } }>
             <TextField
               fullWidth
               placeholder="City"
@@ -93,7 +93,7 @@ const ListingsPage: React.FC = () => {
               onChange={(e) => handleFilterChange('city', e.target.value)}
             />
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid size={{ xs: 12, md: 2 } }>
             <TextField
               fullWidth
               select
@@ -110,7 +110,7 @@ const ListingsPage: React.FC = () => {
               <MenuItem value="COWORKING_SPACE">Coworking Space</MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid size={{ xs: 12, md: 2 } }>
             <TextField
               fullWidth
               select
@@ -126,7 +126,7 @@ const ListingsPage: React.FC = () => {
               <MenuItem value="STUDIO">Studio</MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid size={{ xs: 12, md: 2 } }>
             <Button
               fullWidth
               variant="contained"
@@ -150,7 +150,7 @@ const ListingsPage: React.FC = () => {
         <>
           <Grid container spacing={3}>
             {listings.map((listing) => (
-              <Grid item xs={12} sm={6} md={4} key={listing.id}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={listing.id}>
                 <Card
                   component={Link}
                   to={`/listings/${listing.id}`}
@@ -171,14 +171,14 @@ const ListingsPage: React.FC = () => {
                       {listing.title}
                     </Typography>
                     
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 } }>
                       <LocationOn sx={{ mr: 0.5, fontSize: 16 }} />
                       <Typography variant="body2" color="text.secondary">
                         {listing.city}, {listing.state}
                       </Typography>
                     </Box>
 
-                    <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+                    <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' } }>
                       <Chip
                         label={listing.businessType.replace(/_/g, ' ')}
                         size="small"
@@ -191,14 +191,14 @@ const ListingsPage: React.FC = () => {
                       />
                     </Box>
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 } }>
                       <Rating
                         value={listing.averageRating || 0}
                         readOnly
                         size="small"
                         precision={0.1}
                       />
-                      <Typography variant="body2" sx={{ ml: 1 }}>
+                      <Typography variant="body2" sx={{ ml: 1 } }>
                         ({listing.reviewCount || 0})
                       </Typography>
                     </Box>
@@ -213,7 +213,7 @@ const ListingsPage: React.FC = () => {
           </Grid>
 
           {totalPages > 1 && (
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 } }>
               <Pagination
                 count={totalPages}
                 page={page}

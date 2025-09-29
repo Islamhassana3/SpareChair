@@ -131,6 +131,43 @@ npm run build
 npm start
 ```
 
+## 🚀 Railway.app Deployment
+
+ChairShare is optimized for deployment on Railway.app with the following features:
+
+### Quick Deploy
+1. **One-Click Deploy**: Connect your GitHub repository to Railway
+2. **Auto-Configuration**: Includes `railway.toml`, `nixpacks.toml`, and `Procfile`
+3. **Database Setup**: Add PostgreSQL service for automatic DATABASE_URL configuration
+
+### Railway-Specific Optimizations
+- ✅ **Optimized Build Process**: Efficient multi-stage build with dependency caching
+- ✅ **Health Checks**: Enhanced `/api/health` endpoint with database connectivity monitoring
+- ✅ **Environment Handling**: Production-ready CORS and proxy configuration
+- ✅ **Database Migrations**: Automatic Prisma client generation and schema deployment
+- ✅ **Static File Serving**: Optimized React build serving from Express server
+- ✅ **Process Management**: Railway-aware startup scripts and error handling
+
+### Configuration Files
+- `railway.toml` - Railway platform configuration
+- `nixpacks.toml` - Build environment specification
+- `Procfile` - Process definition for Railway
+- `start.sh` - Railway-optimized startup script
+- `.env.railway` - Environment variable template
+- `RAILWAY_DEPLOYMENT.md` - Detailed deployment guide
+
+### Required Environment Variables
+```bash
+DATABASE_URL=postgresql://...    # Auto-provided by Railway PostgreSQL
+JWT_SECRET=your-secure-secret
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_PUBLISHABLE_KEY=pk_live_...
+NODE_ENV=production
+CLIENT_URL=https://your-app.railway.app
+```
+
+📋 **See [RAILWAY_DEPLOYMENT.md](./RAILWAY_DEPLOYMENT.md) for complete deployment guide**
+
 ## 📱 API Endpoints
 
 ### Authentication
