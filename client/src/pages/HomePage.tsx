@@ -12,7 +12,7 @@ import {
   TextField,
   InputAdornment,
 } from '@mui/material';
-import { Search, Chair, Business, Star } from '@mui/icons-material';
+import { Search, Chair, Business } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
@@ -82,7 +82,7 @@ const HomePage: React.FC = () => {
           How ChairShare Works
         </Typography>
         <Grid container spacing={4} sx={{ mt: 4 }}>
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Card sx={{ textAlign: 'center', p: 3 }}>
               <Search sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
               <Typography variant="h5" gutterBottom>
@@ -94,7 +94,7 @@ const HomePage: React.FC = () => {
               </Typography>
             </Card>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Card sx={{ textAlign: 'center', p: 3 }}>
               <Chair sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
               <Typography variant="h5" gutterBottom>
@@ -106,7 +106,7 @@ const HomePage: React.FC = () => {
               </Typography>
             </Card>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Card sx={{ textAlign: 'center', p: 3 }}>
               <Business sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
               <Typography variant="h5" gutterBottom>
@@ -136,7 +136,7 @@ const HomePage: React.FC = () => {
               { name: 'Art Studios', image: '/api/placeholder/300/200', count: '40+ spaces' },
               { name: 'Music Studios', image: '/api/placeholder/300/200', count: '30+ spaces' },
             ].map((space) => (
-              <Grid item xs={12} sm={6} md={4} key={space.name}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={space.name}>
                 <Card sx={{ height: '100%' }}>
                   <CardMedia
                     component="img"
