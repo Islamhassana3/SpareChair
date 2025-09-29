@@ -1,0 +1,194 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  firstName   String
+  lastName    String
+  phone       String?
+  avatar      String?
+  isVerified  Boolean  @default(false)
+  userType    UserType @default(GUEST)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Host-specific fields
+  businessName    String?
+  businessType    String?
+  businessAddress String?
+
+  // Relations
+  listings    Listing[]
+  bookings    Booking[]
+  reviews     Review[]
+  givenReviews Review[] @relation("ReviewAuthor")
+
+  @@map("users")
+}
+
+model Listing {
+  id            String      @id @default(cuid())
+  title         String
+  description   String
+  businessType  BusinessType
+  spaceType     SpaceType
+  address       String
+  city          String
+  state         String
+  zipCode       String
+  latitude      Float?
+  longitude     Float?
+  pricePerHour  Float
+  pricePerDay   Float?
+  amenities     String[]
+  images        String[]
+  isActive      Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relations
+  hostId        String
+  host          User        @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  bookings      Booking[]
+  reviews       Review[]
+  availability  Availability[]
+
+  @@map("listings")
+}
+
+model Availability {
+  id        String   @id @default(cuid())
+  date      DateTime @db.Date
+  startTime String   // "09:00"
+  endTime   String   // "17:00"
+  isBooked  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  // Relations
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  booking   Booking?
+
+  @@unique([listingId, date, startTime])
+  @@map("availability")
+}
+
+model Booking {
+  id          String        @id @default(cuid())
+  startDate   DateTime      @db.Date
+  endDate     DateTime      @db.Date
+  startTime   String
+  endTime     String
+  totalHours  Int
+  totalAmount Float
+  status      BookingStatus @default(PENDING)
+  message     String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  guestId       String
+  guest         User         @relation(fields: [guestId], references: [id])
+  listingId     String
+  listing       Listing      @relation(fields: [listingId], references: [id])
+  availabilityId String?     @unique
+  availability  Availability? @relation(fields: [availabilityId], references: [id])
+  payment       Payment?
+  review        Review?
+
+  @@map("bookings")
+}
+
+model Payment {
+  id               String        @id @default(cuid())
+  amount           Float
+  currency         String        @default("usd")
+  stripePaymentId  String?
+  status           PaymentStatus @default(PENDING)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  // Relations
+  bookingId String  @unique
+  booking   Booking @relation(fields: [bookingId], references: [id])
+
+  @@map("payments")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int      // 1-5 stars
+  comment   String?
+  createdAt DateTime @default(now())
+
+  // Relations
+  bookingId String  @unique
+  booking   Booking @relation(fields: [bookingId], references: [id])
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id])
+  guestId   String
+  guest     User    @relation(fields: [guestId], references: [id])
+  hostId    String
+  host      User    @relation("ReviewAuthor", fields: [hostId], references: [id])
+
+  @@map("reviews")
+}
+
+enum UserType {
+  GUEST
+  HOST
+  ADMIN
+}
+
+enum BusinessType {
+  SALON
+  BARBERSHOP
+  SPA
+  MASSAGE_THERAPY
+  NAIL_SALON
+  TATTOO_PARLOR
+  PHOTOGRAPHY_STUDIO
+  MUSIC_STUDIO
+  ART_STUDIO
+  DANCE_STUDIO
+  FITNESS_STUDIO
+  COWORKING_SPACE
+  MEDICAL_OFFICE
+  THERAPY_OFFICE
+  OTHER
+}
+
+enum SpaceType {
+  CHAIR
+  ROOM
+  STATION
+  DESK
+  STUDIO
+  OFFICE
+  OTHER
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
