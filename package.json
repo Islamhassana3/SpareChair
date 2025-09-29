@@ -9,11 +9,18 @@
     "server": "nodemon server/index.js",
     "client": "cd client && npm start",
     "build": "cd client && npm run build",
-    "install-deps": "npm install && cd client && npm install"
+    "install-deps": "npm install && cd client && npm install",
+    "railway:build": "npm run install-deps && npm run build && npx prisma generate",
+    "railway:start": "npx prisma db push && npm start",
+    "heroku-postbuild": "npm run build && npx prisma generate"
   },
   "keywords": ["airbnb", "booking", "spaces", "salon", "therapy", "freelance"],
   "author": "ChairShare Team",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "dependencies": {
     "express": "^4.18.2",
     "cors": "^2.8.5",
