@@ -2,6 +2,19 @@
 
 ChairShare is an Airbnb-style platform for service-based businesses with unused space. Salon owners, therapists, or studios can list spare chairs or rooms, set availability and pricing, and earn from underused capacity. Freelancers book spaces flexibly by the hour or day, with secure payments, ID verification, and reviews.
 
+## 🚀 Quick Start
+
+**New to ChairShare?** Get up and running in 5 minutes with our [Quick Start Guide](./QUICKSTART.md)!
+
+```bash
+npm run install-deps && cp .env.example .env
+# Edit .env with your database URL
+npx prisma generate && npx prisma db push
+npm run dev
+```
+
+For detailed setup instructions, see the [Installation](#-installation) section below.
+
 ## 📋 Platform Review & Improvement Plan
 
 **New!** A comprehensive review and improvement plan has been created for the ChairShare platform:
