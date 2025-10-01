@@ -137,10 +137,13 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || '0.0.0.0';
 
-app.listen(PORT, HOST, () => {
-  logger.info(`ChairShare server running on ${HOST}:${PORT}`);
-  logger.info(`Environment: ${process.env.NODE_ENV}`);
-  logger.info(`Database URL configured: ${process.env.DATABASE_URL ? 'Yes' : 'No'}`);
-});
+// Only start server if not in test environment
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, HOST, () => {
+    logger.info(`ChairShare server running on ${HOST}:${PORT}`);
+    logger.info(`Environment: ${process.env.NODE_ENV}`);
+    logger.info(`Database URL configured: ${process.env.DATABASE_URL ? 'Yes' : 'No'}`);
+  });
+}
 
 module.exports = app;

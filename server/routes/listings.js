@@ -8,6 +8,7 @@ const {
   getMyListings,
 } = require('../controllers/listingController');
 const { authMiddleware, hostMiddleware } = require('../middleware/auth');
+const { validate, schemas } = require('../middleware/validate');
 
 const router = express.Router();
 
@@ -16,8 +17,8 @@ router.get('/', getListings);
 router.get('/:id', getListing);
 
 // Protected routes (Host only)
-router.post('/', authMiddleware, hostMiddleware, createListing);
-router.put('/:id', authMiddleware, hostMiddleware, updateListing);
+router.post('/', authMiddleware, hostMiddleware, validate(schemas.listing), createListing);
+router.put('/:id', authMiddleware, hostMiddleware, validate(schemas.listing), updateListing);
 router.delete('/:id', authMiddleware, hostMiddleware, deleteListing);
 router.get('/host/my-listings', authMiddleware, hostMiddleware, getMyListings);
 
