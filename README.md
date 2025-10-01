@@ -121,7 +121,15 @@ npx prisma generate
 npx prisma db push
 ```
 
-5. **Start the development servers**
+5. **Verify your setup (optional but recommended)**
+
+```bash
+./verify-setup.sh
+```
+
+This script checks if all prerequisites are installed and properly configured.
+
+6. **Start the development servers**
 
 ```bash
 npm run dev
@@ -131,6 +139,25 @@ This will start:
 
 - Backend server on http://localhost:5000
 - React frontend on http://localhost:3000
+
+### ⚠️ Common Issues
+
+If you encounter problems during setup, check these common issues:
+
+**"Login failed" or cannot connect to backend:**
+- Ensure backend is running on port 5000
+- Run `curl http://localhost:5000/api/health` to verify
+- Check that `.env` file exists and has correct values
+
+**Prisma errors:**
+- Run `npx prisma generate` if you see "@prisma/client did not initialize"
+- Ensure PostgreSQL is running: `pg_isready`
+- Verify DATABASE_URL in `.env` is correct
+
+**Port already in use:**
+- Kill existing processes: `lsof -ti:5000 | xargs kill -9` (backend) or `lsof -ti:3000 | xargs kill -9` (frontend)
+
+📚 **For detailed troubleshooting, see [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)**
 
 ## 🚀 Usage
 

@@ -29,7 +29,14 @@ const LoginPage: React.FC = () => {
       await login(email, password);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Login failed');
+      // Handle network errors specifically
+      if (err.isNetworkError) {
+        setError(
+          `${err.message}. ${err.details || 'Please check if the backend server is running.'}`
+        );
+      } else {
+        setError(err.response?.data?.error || 'Login failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
