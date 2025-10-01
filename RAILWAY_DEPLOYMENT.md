@@ -82,6 +82,7 @@ CLIENT_URL=https://your-app-name.up.railway.app
 - Enhanced health check endpoint (`/api/health`)
 - Database connectivity monitoring
 - Environment status reporting
+- **Logging**: Winston logger automatically outputs to console in production for Railway log aggregation
 
 ### File Upload Considerations
 
@@ -130,6 +131,12 @@ Returns:
    - Current implementation uses local filesystem
    - Consider implementing cloud storage for production
 
+5. **Logging Configuration**
+   - Application automatically logs to console in production
+   - View logs in Railway dashboard under "Deployments" > "Logs"
+   - Logs are captured from stdout/stderr by Railway
+   - File-based logging is only used in development mode
+
 ## Performance Tips
 
 1. **Database**
@@ -144,6 +151,7 @@ Returns:
    - Use Railway's built-in monitoring
    - Monitor `/api/health` endpoint
    - Set up alerts for application errors
+   - Application logs are automatically captured by Railway from console output
 
 ## Cost Optimization
 

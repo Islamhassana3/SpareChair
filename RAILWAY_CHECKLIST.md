@@ -24,6 +24,7 @@
 - [x] ✅ **Trust Proxy**: Configured for Railway's reverse proxy
 - [x] ✅ **Health Check**: Enhanced `/api/health` endpoint with database monitoring
 - [x] ✅ **Error Handling**: Proper error handling and logging
+- [x] ✅ **Logging**: Winston logger configured for console output in production (Railway-compatible)
 
 ### Database Configuration
 
@@ -98,7 +99,7 @@ After deployment, verify:
 ### Production Features
 
 - **Security**: Production CORS, proxy trust, secure headers
-- **Logging**: Enhanced logging for Railway's log aggregation
+- **Logging**: Winston logger automatically outputs to console in production for Railway's log aggregation (file-based logging in development only)
 - **Error Handling**: Structured error responses for debugging
 
 ## 🚨 Known Limitations & Considerations
@@ -161,6 +162,13 @@ CLIENT_URL=https://your-app-name.up.railway.app
 1. Ensure PostgreSQL service is running
 2. Check DATABASE_URL is properly set
 3. Verify Prisma schema is valid
+
+### Logging Issues
+
+1. **View logs**: Check Railway dashboard → Deployments → Logs
+2. **Log format**: All logs output to console in production (stdout/stderr)
+3. **Log levels**: Error, warn, info, http, and debug levels available
+4. **Development**: Logs written to `logs/` directory locally
 
 ## 📞 Support Resources
 
