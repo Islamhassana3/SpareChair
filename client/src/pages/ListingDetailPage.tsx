@@ -9,8 +9,8 @@ const ListingDetailPage: React.FC = () => {
           Listing Detail Page
         </Typography>
         <Typography variant="body1">
-          This page will show detailed information about a specific listing,
-          including photos, amenities, host information, reviews, and booking options.
+          This page will show detailed information about a specific listing, including photos,
+          amenities, host information, reviews, and booking options.
         </Typography>
       </Paper>
     </Container>

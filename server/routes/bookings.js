@@ -4,7 +4,7 @@ const {
   getBookings,
   getBooking,
   updateBookingStatus,
-  cancelBooking
+  cancelBooking,
 } = require('../controllers/bookingController');
 const { authMiddleware } = require('../middleware/auth');
 

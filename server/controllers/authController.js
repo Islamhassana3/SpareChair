@@ -12,7 +12,7 @@ const register = async (req, res) => {
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
     });
 
     if (existingUser) {
@@ -31,7 +31,7 @@ const register = async (req, res) => {
         lastName,
         userType: userType || 'GUEST',
         businessName: userType === 'HOST' ? businessName : undefined,
-        businessType: userType === 'HOST' ? businessType : undefined
+        businessType: userType === 'HOST' ? businessType : undefined,
       },
       select: {
         id: true,
@@ -42,8 +42,8 @@ const register = async (req, res) => {
         businessName: true,
         businessType: true,
         isVerified: true,
-        createdAt: true
-      }
+        createdAt: true,
+      },
     });
 
     const token = generateToken(user.id);
@@ -51,7 +51,7 @@ const register = async (req, res) => {
     res.status(201).json({
       message: 'User registered successfully',
       user,
-      token
+      token,
     });
   } catch (error) {
     console.error('Registration error:', error);
@@ -65,7 +65,7 @@ const login = async (req, res) => {
 
     // Find user
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
     });
 
     if (!user) {
@@ -87,7 +87,7 @@ const login = async (req, res) => {
     res.json({
       message: 'Login successful',
       user: userWithoutPassword,
-      token
+      token,
     });
   } catch (error) {
     console.error('Login error:', error);
@@ -111,8 +111,8 @@ const getProfile = async (req, res) => {
         businessType: true,
         businessAddress: true,
         isVerified: true,
-        createdAt: true
-      }
+        createdAt: true,
+      },
     });
 
     res.json({ user });
@@ -125,5 +125,5 @@ const getProfile = async (req, res) => {
 module.exports = {
   register,
   login,
-  getProfile
+  getProfile,
 };

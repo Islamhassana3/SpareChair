@@ -1,17 +1,21 @@
 # Railway.app Deployment Guide for ChairShare
 
 ## Overview
+
 This guide contains optimizations and configurations specific for deploying ChairShare on Railway.app.
 
 ## Railway Configuration Files
 
 ### 1. railway.toml
+
 Configures Railway-specific build and deployment settings.
 
 ### 2. nixpacks.toml
+
 Configures the Nixpacks builder used by Railway.
 
 ### 3. Procfile
+
 Specifies the process to run the application.
 
 ## Environment Variables Required
@@ -68,32 +72,39 @@ CLIENT_URL=https://your-app-name.up.railway.app
 ## Production Optimizations Included
 
 ### Performance
+
 - Optimized build process with separated frontend/backend builds
 - Efficient static file serving for React app
 - Database connection pooling with Prisma
 
 ### Monitoring
+
 - Enhanced health check endpoint (`/api/health`)
 - Database connectivity monitoring
 - Environment status reporting
 
 ### File Upload Considerations
+
 ⚠️ **Important**: Railway has ephemeral filesystem. Current implementation serves uploads from local `/uploads` directory.
 
 **Recommendations for production:**
+
 1. **Use Railway's Volume (Recommended)**: Mount persistent volume for uploads
 2. **Use Cloud Storage**: Integrate with AWS S3, Cloudinary, or similar service
 3. **Update Upload Routes**: Modify file upload handling in production
 
 ### Security
+
 - Proper CORS configuration for production
 - Environment-based configuration
 - Secure database connections
 
 ## Health Check
+
 Access the health check endpoint at: `https://your-app.railway.app/api/health`
 
 Returns:
+
 - Application status
 - Database connectivity
 - Environment information

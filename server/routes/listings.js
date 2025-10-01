@@ -5,7 +5,7 @@ const {
   getListing,
   updateListing,
   deleteListing,
-  getMyListings
+  getMyListings,
 } = require('../controllers/listingController');
 const { authMiddleware, hostMiddleware } = require('../middleware/auth');
 

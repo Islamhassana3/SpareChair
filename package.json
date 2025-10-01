@@ -12,9 +12,24 @@
     "install-deps": "npm install && cd client && npm install",
     "railway:build": "npm run install-deps && npm run build && npx prisma generate",
     "railway:start": "npx prisma db push && npm start",
-    "heroku-postbuild": "npm run build && npx prisma generate"
+    "heroku-postbuild": "npm run build && npx prisma generate",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "lint": "eslint \"server/**/*.js\"",
+    "lint:fix": "eslint \"server/**/*.js\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepare": "husky install"
   },
-  "keywords": ["airbnb", "booking", "spaces", "salon", "therapy", "freelance"],
+  "keywords": [
+    "airbnb",
+    "booking",
+    "spaces",
+    "salon",
+    "therapy",
+    "freelance"
+  ],
   "author": "ChairShare Team",
   "license": "MIT",
   "engines": {
@@ -22,19 +37,35 @@
     "npm": ">=9.0.0"
   },
   "dependencies": {
-    "express": "^4.18.2",
+    "@prisma/client": "^5.4.2",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.1",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.6",
     "prisma": "^5.4.2",
-    "@prisma/client": "^5.4.2",
     "stripe": "^13.6.0",
-    "nodemailer": "^6.9.6"
+    "winston": "^3.18.3"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "concurrently": "^8.2.1",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "lint-staged": "^16.2.3",
     "nodemon": "^3.0.1",
-    "concurrently": "^8.2.1"
+    "prettier": "^3.6.2",
+    "supertest": "^7.1.4"
   }
 }

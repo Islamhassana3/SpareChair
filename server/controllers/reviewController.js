@@ -8,8 +8,8 @@ const createReview = async (req, res) => {
     const booking = await prisma.booking.findUnique({
       where: { id: bookingId },
       include: {
-        listing: true
-      }
+        listing: true,
+      },
     });
 
     if (!booking) {
@@ -26,7 +26,7 @@ const createReview = async (req, res) => {
 
     // Check if review already exists
     const existingReview = await prisma.review.findUnique({
-      where: { bookingId }
+      where: { bookingId },
     });
 
     if (existingReview) {
@@ -40,7 +40,7 @@ const createReview = async (req, res) => {
         guestId: req.user.id,
         hostId: booking.listing.hostId,
         rating: parseInt(rating),
-        comment
+        comment,
       },
       include: {
         guest: {
@@ -48,21 +48,21 @@ const createReview = async (req, res) => {
             id: true,
             firstName: true,
             lastName: true,
-            avatar: true
-          }
+            avatar: true,
+          },
         },
         listing: {
           select: {
             id: true,
-            title: true
-          }
-        }
-      }
+            title: true,
+          },
+        },
+      },
     });
 
     res.status(201).json({
       message: 'Review created successfully',
-      review
+      review,
     });
   } catch (error) {
     console.error('Create review error:', error);
@@ -77,7 +77,7 @@ const getReviews = async (req, res) => {
     const where = {
       ...(listingId && { listingId }),
       ...(hostId && { hostId }),
-      ...(guestId && { guestId })
+      ...(guestId && { guestId }),
     };
 
     const reviews = await prisma.review.findMany({
@@ -88,17 +88,17 @@ const getReviews = async (req, res) => {
             id: true,
             firstName: true,
             lastName: true,
-            avatar: true
-          }
+            avatar: true,
+          },
         },
         listing: {
           select: {
             id: true,
-            title: true
-          }
-        }
+            title: true,
+          },
+        },
       },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
     });
 
     res.json({ reviews });
@@ -115,7 +115,7 @@ const updateReview = async (req, res) => {
 
     // Check if review exists and belongs to user
     const existingReview = await prisma.review.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingReview) {
@@ -130,7 +130,7 @@ const updateReview = async (req, res) => {
       where: { id },
       data: {
         rating: parseInt(rating),
-        comment
+        comment,
       },
       include: {
         guest: {
@@ -138,21 +138,21 @@ const updateReview = async (req, res) => {
             id: true,
             firstName: true,
             lastName: true,
-            avatar: true
-          }
+            avatar: true,
+          },
         },
         listing: {
           select: {
             id: true,
-            title: true
-          }
-        }
-      }
+            title: true,
+          },
+        },
+      },
     });
 
     res.json({
       message: 'Review updated successfully',
-      review
+      review,
     });
   } catch (error) {
     console.error('Update review error:', error);
@@ -166,7 +166,7 @@ const deleteReview = async (req, res) => {
 
     // Check if review exists and belongs to user
     const existingReview = await prisma.review.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingReview) {
@@ -178,7 +178,7 @@ const deleteReview = async (req, res) => {
     }
 
     await prisma.review.delete({
-      where: { id }
+      where: { id },
     });
 
     res.json({ message: 'Review deleted successfully' });
@@ -192,5 +192,5 @@ module.exports = {
   createReview,
   getReviews,
   updateReview,
-  deleteReview
+  deleteReview,
 };

@@ -107,7 +107,7 @@ export interface Payment {
   updatedAt: string;
 }
 
-export type BusinessType = 
+export type BusinessType =
   | 'SALON'
   | 'BARBERSHOP'
   | 'SPA'
@@ -124,26 +124,11 @@ export type BusinessType =
   | 'THERAPY_OFFICE'
   | 'OTHER';
 
-export type SpaceType = 
-  | 'CHAIR'
-  | 'ROOM'
-  | 'STATION'
-  | 'DESK'
-  | 'STUDIO'
-  | 'OFFICE'
-  | 'OTHER';
+export type SpaceType = 'CHAIR' | 'ROOM' | 'STATION' | 'DESK' | 'STUDIO' | 'OFFICE' | 'OTHER';
 
-export type BookingStatus = 
-  | 'PENDING'
-  | 'CONFIRMED'
-  | 'CANCELLED'
-  | 'COMPLETED';
+export type BookingStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';
 
-export type PaymentStatus = 
-  | 'PENDING'
-  | 'COMPLETED'
-  | 'FAILED'
-  | 'REFUNDED';
+export type PaymentStatus = 'PENDING' | 'COMPLETED' | 'FAILED' | 'REFUNDED';
 
 export interface AuthResponse {
   message: string;

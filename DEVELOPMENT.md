@@ -3,17 +3,20 @@
 ## Quick Start (Local Development)
 
 1. **Install Dependencies**
+
    ```bash
    npm run install-deps
    ```
 
 2. **Environment Setup**
+
    ```bash
    cp .env.example .env
    # Edit .env with your database URL and API keys
    ```
 
 3. **Database Setup**
+
    ```bash
    npx prisma generate
    npx prisma db push
@@ -66,6 +69,7 @@ curl http://localhost:5000/api/health
 ```
 
 Expected response:
+
 ```json
 {
   "status": "OK",

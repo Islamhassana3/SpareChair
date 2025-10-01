@@ -2,18 +2,11 @@ const prisma = require('../config/database');
 
 const createBooking = async (req, res) => {
   try {
-    const {
-      listingId,
-      startDate,
-      endDate,
-      startTime,
-      endTime,
-      message
-    } = req.body;
+    const { listingId, startDate, endDate, startTime, endTime, message } = req.body;
 
     // Check if listing exists
     const listing = await prisma.listing.findUnique({
-      where: { id: listingId }
+      where: { id: listingId },
     });
 
     if (!listing) {
@@ -37,7 +30,7 @@ const createBooking = async (req, res) => {
         endTime,
         totalHours,
         totalAmount,
-        message: message || null
+        message: message || null,
       },
       include: {
         listing: {
@@ -46,23 +39,23 @@ const createBooking = async (req, res) => {
             title: true,
             address: true,
             city: true,
-            pricePerHour: true
-          }
+            pricePerHour: true,
+          },
         },
         guest: {
           select: {
             id: true,
             firstName: true,
             lastName: true,
-            email: true
-          }
-        }
-      }
+            email: true,
+          },
+        },
+      },
     });
 
     res.status(201).json({
       message: 'Booking created successfully',
-      booking
+      booking,
     });
   } catch (error) {
     console.error('Create booking error:', error);
@@ -77,7 +70,7 @@ const getBookings = async (req, res) => {
     const where = {
       ...(type === 'guest' ? { guestId: req.user.id } : {}),
       ...(type === 'host' ? { listing: { hostId: req.user.id } } : {}),
-      ...(status && { status })
+      ...(status && { status }),
     };
 
     const bookings = await prisma.booking.findMany({
@@ -96,10 +89,10 @@ const getBookings = async (req, res) => {
                 id: true,
                 firstName: true,
                 lastName: true,
-                businessName: true
-              }
-            }
-          }
+                businessName: true,
+              },
+            },
+          },
         },
         guest: {
           select: {
@@ -107,12 +100,12 @@ const getBookings = async (req, res) => {
             firstName: true,
             lastName: true,
             email: true,
-            phone: true
-          }
+            phone: true,
+          },
         },
-        payment: true
+        payment: true,
       },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
     });
 
     res.json({ bookings });
@@ -138,10 +131,10 @@ const getBooking = async (req, res) => {
                 lastName: true,
                 businessName: true,
                 email: true,
-                phone: true
-              }
-            }
-          }
+                phone: true,
+              },
+            },
+          },
         },
         guest: {
           select: {
@@ -149,12 +142,12 @@ const getBooking = async (req, res) => {
             firstName: true,
             lastName: true,
             email: true,
-            phone: true
-          }
+            phone: true,
+          },
         },
         payment: true,
-        review: true
-      }
+        review: true,
+      },
     });
 
     if (!booking) {
@@ -186,8 +179,8 @@ const updateBookingStatus = async (req, res) => {
     const existingBooking = await prisma.booking.findUnique({
       where: { id },
       include: {
-        listing: true
-      }
+        listing: true,
+      },
     });
 
     if (!existingBooking) {
@@ -208,23 +201,23 @@ const updateBookingStatus = async (req, res) => {
             id: true,
             title: true,
             address: true,
-            city: true
-          }
+            city: true,
+          },
         },
         guest: {
           select: {
             id: true,
             firstName: true,
             lastName: true,
-            email: true
-          }
-        }
-      }
+            email: true,
+          },
+        },
+      },
     });
 
     res.json({
       message: 'Booking status updated successfully',
-      booking
+      booking,
     });
   } catch (error) {
     console.error('Update booking status error:', error);
@@ -238,7 +231,7 @@ const cancelBooking = async (req, res) => {
 
     // Check if booking exists
     const existingBooking = await prisma.booking.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingBooking) {
@@ -264,15 +257,15 @@ const cancelBooking = async (req, res) => {
             id: true,
             title: true,
             address: true,
-            city: true
-          }
-        }
-      }
+            city: true,
+          },
+        },
+      },
     });
 
     res.json({
       message: 'Booking cancelled successfully',
-      booking
+      booking,
     });
   } catch (error) {
     console.error('Cancel booking error:', error);
@@ -285,5 +278,5 @@ module.exports = {
   getBookings,
   getBooking,
   updateBookingStatus,
-  cancelBooking
+  cancelBooking,
 };

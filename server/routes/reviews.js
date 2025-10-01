@@ -3,7 +3,7 @@ const {
   createReview,
   getReviews,
   updateReview,
-  deleteReview
+  deleteReview,
 } = require('../controllers/reviewController');
 const { authMiddleware } = require('../middleware/auth');
 

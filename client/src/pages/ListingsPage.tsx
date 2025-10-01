@@ -85,7 +85,7 @@ const ListingsPage: React.FC = () => {
               }}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 2 } }>
+          <Grid size={{ xs: 12, md: 2 }}>
             <TextField
               fullWidth
               placeholder="City"
@@ -93,7 +93,7 @@ const ListingsPage: React.FC = () => {
               onChange={(e) => handleFilterChange('city', e.target.value)}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 2 } }>
+          <Grid size={{ xs: 12, md: 2 }}>
             <TextField
               fullWidth
               select
@@ -110,7 +110,7 @@ const ListingsPage: React.FC = () => {
               <MenuItem value="COWORKING_SPACE">Coworking Space</MenuItem>
             </TextField>
           </Grid>
-          <Grid size={{ xs: 12, md: 2 } }>
+          <Grid size={{ xs: 12, md: 2 }}>
             <TextField
               fullWidth
               select
@@ -126,13 +126,8 @@ const ListingsPage: React.FC = () => {
               <MenuItem value="STUDIO">Studio</MenuItem>
             </TextField>
           </Grid>
-          <Grid size={{ xs: 12, md: 2 } }>
-            <Button
-              fullWidth
-              variant="contained"
-              onClick={handleSearch}
-              sx={{ height: '56px' }}
-            >
+          <Grid size={{ xs: 12, md: 2 }}>
+            <Button fullWidth variant="contained" onClick={handleSearch} sx={{ height: '56px' }}>
               Search
             </Button>
           </Grid>
@@ -170,35 +165,31 @@ const ListingsPage: React.FC = () => {
                     <Typography variant="h6" gutterBottom noWrap>
                       {listing.title}
                     </Typography>
-                    
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 } }>
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                       <LocationOn sx={{ mr: 0.5, fontSize: 16 }} />
                       <Typography variant="body2" color="text.secondary">
                         {listing.city}, {listing.state}
                       </Typography>
                     </Box>
 
-                    <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' } }>
+                    <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
                       <Chip
                         label={listing.businessType.replace(/_/g, ' ')}
                         size="small"
                         color="primary"
                       />
-                      <Chip
-                        label={listing.spaceType}
-                        size="small"
-                        variant="outlined"
-                      />
+                      <Chip label={listing.spaceType} size="small" variant="outlined" />
                     </Box>
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 } }>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                       <Rating
                         value={listing.averageRating || 0}
                         readOnly
                         size="small"
                         precision={0.1}
                       />
-                      <Typography variant="body2" sx={{ ml: 1 } }>
+                      <Typography variant="body2" sx={{ ml: 1 }}>
                         ({listing.reviewCount || 0})
                       </Typography>
                     </Box>
@@ -213,7 +204,7 @@ const ListingsPage: React.FC = () => {
           </Grid>
 
           {totalPages > 1 && (
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 } }>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
               <Pagination
                 count={totalPages}
                 page={page}
