@@ -5,9 +5,13 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 require('dotenv').config();
 
+const { Sentry, initSentry } = require('./config/sentry');
 const logger = require('./config/logger');
 const { errorHandler } = require('./middleware/errorHandler');
 const { limiter, authLimiter } = require('./middleware/rateLimiter');
+const { performanceLogger } = require('./middleware/performanceLogger');
+const { auditLogger } = require('./middleware/auditLogger');
+const { requestIdMiddleware } = require('./middleware/requestId');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
@@ -16,6 +20,24 @@ const bookingRoutes = require('./routes/bookings');
 const reviewRoutes = require('./routes/reviews');
 
 const app = express();
+
+// Initialize Sentry - must be first
+initSentry(app);
+
+// Sentry request handler - must be before all other handlers
+if (process.env.NODE_ENV === 'production' && process.env.SENTRY_DSN) {
+  app.use(Sentry.Handlers.requestHandler());
+  app.use(Sentry.Handlers.tracingHandler());
+}
+
+// Add unique request ID to each request
+app.use(requestIdMiddleware);
+
+// Performance logging middleware
+app.use(performanceLogger(1000)); // Log requests taking more than 1 second
+
+// Security audit logging
+app.use(auditLogger);
 
 // Trust proxy for Railway
 if (process.env.NODE_ENV === 'production') {
@@ -129,6 +151,11 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
+}
+
+// Sentry error handler - must be before custom error handlers
+if (process.env.NODE_ENV === 'production' && process.env.SENTRY_DSN) {
+  app.use(Sentry.Handlers.errorHandler());
 }
 
 // Error handling middleware - must be last

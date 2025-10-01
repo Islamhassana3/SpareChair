@@ -1,4 +1,5 @@
 const logger = require('../config/logger');
+const { Sentry } = require('../config/sentry');
 
 class AppError extends Error {
   constructor(message, statusCode) {
@@ -24,6 +25,26 @@ const errorHandler = (err, req, res, next) => {
     ip: req.ip,
     userId: req.user?.id,
   });
+
+  // Report to Sentry if it's a server error and not operational
+  if (
+    process.env.NODE_ENV === 'production' &&
+    process.env.SENTRY_DSN &&
+    (!err.isOperational || err.statusCode >= 500)
+  ) {
+    Sentry.captureException(err, {
+      user: req.user ? { id: req.user.id, email: req.user.email } : undefined,
+      tags: {
+        path: req.path,
+        method: req.method,
+      },
+      extra: {
+        body: req.body,
+        query: req.query,
+        params: req.params,
+      },
+    });
+  }
 
   // Development error response
   if (process.env.NODE_ENV === 'development') {
