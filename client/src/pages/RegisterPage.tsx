@@ -91,7 +91,14 @@ const RegisterPage: React.FC = () => {
       await register(registerData);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Registration failed');
+      // Handle network errors specifically
+      if (err.isNetworkError) {
+        setError(
+          `${err.message}. ${err.details || 'Please check if the backend server is running.'}`
+        );
+      } else {
+        setError(err.response?.data?.error || 'Registration failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

@@ -18,15 +18,28 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle auth errors
+// Handle auth errors and network issues
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Network error - backend is unreachable
+    if (!error.response) {
+      const networkError = {
+        message: 'Cannot connect to server',
+        details: 'The backend server is not running or is unreachable. Please ensure the server is started on http://localhost:5000',
+        originalError: error.message,
+        isNetworkError: true,
+      };
+      return Promise.reject(networkError);
+    }
+    
+    // Authentication error
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.location.href = '/login';
     }
+    
     return Promise.reject(error);
   }
 );
