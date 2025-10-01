@@ -1,6 +1,7 @@
 # Getting Started with ChairShare Improvements
 
 **📋 Reference Documents:**
+
 - [Full Plan](./COMPREHENSIVE_REVIEW_AND_IMPROVEMENT_PLAN.md) - Detailed 300-item improvement plan
 - [Quick Summary](./IMPROVEMENT_PLAN_SUMMARY.md) - At-a-glance overview and metrics
 
@@ -13,6 +14,7 @@ These are the first steps to take this week to start improving the platform imme
 ### Day 1: Setup Development Tools
 
 #### 1. Install Development Dependencies
+
 ```bash
 # Install testing dependencies
 npm install --save-dev jest @testing-library/react @testing-library/jest-dom @testing-library/user-event
@@ -29,7 +31,9 @@ npm install joi
 ```
 
 #### 2. Configure Prettier
+
 Create `.prettierrc` in root:
+
 ```json
 {
   "semi": true,
@@ -42,6 +46,7 @@ Create `.prettierrc` in root:
 ```
 
 Create `.prettierignore`:
+
 ```
 node_modules
 build
@@ -52,7 +57,9 @@ coverage
 ```
 
 #### 3. Add Format Script
+
 Update `package.json`:
+
 ```json
 {
   "scripts": {
@@ -63,6 +70,7 @@ Update `package.json`:
 ```
 
 Run formatting:
+
 ```bash
 npm run format
 ```
@@ -70,11 +78,13 @@ npm run format
 ### Day 2: Security Quick Wins
 
 #### 1. Add Helmet.js (Critical)
+
 ```bash
 npm install helmet
 ```
 
 Update `server/index.js`:
+
 ```javascript
 const helmet = require('helmet');
 
@@ -83,11 +93,13 @@ app.use(helmet());
 ```
 
 #### 2. Add Rate Limiting (Critical)
+
 ```bash
 npm install express-rate-limit
 ```
 
 Create `server/middleware/rateLimiter.js`:
+
 ```javascript
 const rateLimit = require('express-rate-limit');
 
@@ -107,6 +119,7 @@ module.exports = { limiter, authLimiter };
 ```
 
 Apply in `server/index.js`:
+
 ```javascript
 const { limiter, authLimiter } = require('./middleware/rateLimiter');
 
@@ -116,7 +129,9 @@ app.use('/api/auth/register', authLimiter);
 ```
 
 #### 3. Add Input Validation (Critical)
+
 Create `server/validators/authValidator.js`:
+
 ```javascript
 const Joi = require('joi');
 
@@ -151,6 +166,7 @@ module.exports = {
 ```
 
 Update `server/routes/auth.js`:
+
 ```javascript
 const { validateRegister, validateLogin } = require('../validators/authValidator');
 
@@ -161,11 +177,13 @@ router.post('/login', validateLogin, authController.login);
 ### Day 3: Error Handling & Logging
 
 #### 1. Add Winston Logging
+
 ```bash
 npm install winston
 ```
 
 Create `server/config/logger.js`:
+
 ```javascript
 const winston = require('winston');
 
@@ -183,23 +201,24 @@ const logger = winston.createLogger({
 });
 
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.simple()
-    ),
-  }));
+  logger.add(
+    new winston.transports.Console({
+      format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
+    })
+  );
 }
 
 module.exports = logger;
 ```
 
 #### 2. Add Request Logging
+
 ```bash
 npm install morgan
 ```
 
 Update `server/index.js`:
+
 ```javascript
 const morgan = require('morgan');
 const logger = require('./config/logger');
@@ -214,7 +233,9 @@ app.use(morgan('combined', { stream }));
 ```
 
 #### 3. Add Centralized Error Handler
+
 Create `server/middleware/errorHandler.js`:
+
 ```javascript
 const logger = require('../config/logger');
 
@@ -267,6 +288,7 @@ module.exports = { AppError, errorHandler };
 ```
 
 Update `server/index.js`:
+
 ```javascript
 const { errorHandler } = require('./middleware/errorHandler');
 
@@ -277,11 +299,13 @@ app.use(errorHandler);
 ### Day 4: UI Quick Wins
 
 #### 1. Add Toast Notifications
+
 ```bash
 cd client && npm install react-toastify
 ```
 
 Update `client/src/App.tsx`:
+
 ```typescript
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -297,6 +321,7 @@ function App() {
 ```
 
 Create `client/src/utils/toast.ts`:
+
 ```typescript
 import { toast } from 'react-toastify';
 
@@ -314,7 +339,9 @@ export const showInfo = (message: string) => {
 ```
 
 #### 2. Add Loading States
+
 Create `client/src/components/LoadingSpinner.tsx`:
+
 ```typescript
 import React from 'react';
 import { CircularProgress, Box } from '@mui/material';
@@ -324,9 +351,9 @@ interface LoadingSpinnerProps {
   fullScreen?: boolean;
 }
 
-export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
-  size = 40, 
-  fullScreen = false 
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  size = 40,
+  fullScreen = false
 }) => {
   if (fullScreen) {
     return (
@@ -350,7 +377,9 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 ```
 
 #### 3. Add Error Boundary
+
 Create `client/src/components/ErrorBoundary.tsx`:
+
 ```typescript
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Box, Typography, Button } from '@mui/material';
@@ -414,6 +443,7 @@ export default ErrorBoundary;
 ```
 
 Wrap your app in `client/src/index.tsx`:
+
 ```typescript
 import ErrorBoundary from './components/ErrorBoundary';
 
@@ -429,7 +459,9 @@ root.render(
 ### Day 5: Testing Foundation
 
 #### 1. Configure Jest
+
 Create `jest.config.js` in root:
+
 ```javascript
 module.exports = {
   projects: [
@@ -453,7 +485,9 @@ module.exports = {
 ```
 
 #### 2. Create First Backend Test
+
 Create `server/setupTests.js`:
+
 ```javascript
 // Setup for backend tests
 process.env.NODE_ENV = 'test';
@@ -461,6 +495,7 @@ process.env.JWT_SECRET = 'test-secret';
 ```
 
 Create `server/controllers/__tests__/authController.test.js`:
+
 ```javascript
 const request = require('supertest');
 const app = require('../../index');
@@ -468,30 +503,26 @@ const app = require('../../index');
 describe('Auth Controller', () => {
   describe('POST /api/auth/register', () => {
     it('should register a new user', async () => {
-      const response = await request(app)
-        .post('/api/auth/register')
-        .send({
-          email: 'test@example.com',
-          password: 'password123',
-          firstName: 'Test',
-          lastName: 'User',
-          userType: 'GUEST',
-        });
+      const response = await request(app).post('/api/auth/register').send({
+        email: 'test@example.com',
+        password: 'password123',
+        firstName: 'Test',
+        lastName: 'User',
+        userType: 'GUEST',
+      });
 
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty('token');
     });
 
     it('should return 400 for invalid email', async () => {
-      const response = await request(app)
-        .post('/api/auth/register')
-        .send({
-          email: 'invalid-email',
-          password: 'password123',
-          firstName: 'Test',
-          lastName: 'User',
-          userType: 'GUEST',
-        });
+      const response = await request(app).post('/api/auth/register').send({
+        email: 'invalid-email',
+        password: 'password123',
+        firstName: 'Test',
+        lastName: 'User',
+        userType: 'GUEST',
+      });
 
       expect(response.status).toBe(400);
     });
@@ -500,7 +531,9 @@ describe('Auth Controller', () => {
 ```
 
 #### 3. Add Test Scripts
+
 Update `package.json`:
+
 ```json
 {
   "scripts": {
@@ -514,6 +547,7 @@ Update `package.json`:
 ```
 
 Run tests:
+
 ```bash
 npm test
 ```
@@ -525,19 +559,20 @@ npm test
 ### Setup GitHub Actions
 
 Create `.github/workflows/ci.yml`:
+
 ```yaml
 name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     services:
       postgres:
         image: postgres:14
@@ -553,47 +588,47 @@ jobs:
           - 5432:5432
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: |
-        npm ci
-        cd client && npm ci
-    
-    - name: Run linter
-      run: npm run format:check
-    
-    - name: Run tests
-      run: npm test -- --coverage
-      env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/chairshare_test
-        JWT_SECRET: test-secret
-    
-    - name: Upload coverage
-      uses: codecov/codecov-action@v3
-      with:
-        files: ./coverage/coverage-final.json
-    
-    - name: Build
-      run: npm run build
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          cd client && npm ci
+
+      - name: Run linter
+        run: npm run format:check
+
+      - name: Run tests
+        run: npm test -- --coverage
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/chairshare_test
+          JWT_SECRET: test-secret
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/coverage-final.json
+
+      - name: Build
+        run: npm run build
 
   deploy:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    
+
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Deploy to Railway
-      run: |
-        echo "Deploy to Railway automatically triggers on push to main"
+      - uses: actions/checkout@v3
+
+      - name: Deploy to Railway
+        run: |
+          echo "Deploy to Railway automatically triggers on push to main"
 ```
 
 ### Migrate to Cloud Storage (AWS S3 or Cloudinary)
@@ -605,6 +640,7 @@ npm install @aws-sdk/client-s3 @aws-sdk/s3-request-presigner multer-s3
 ```
 
 Create `server/config/s3.js`:
+
 ```javascript
 const { S3Client } = require('@aws-sdk/client-s3');
 const multer = require('multer');
@@ -648,6 +684,7 @@ npm install cloudinary multer-storage-cloudinary
 ```
 
 Create `server/config/cloudinary.js`:
+
 ```javascript
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -677,6 +714,7 @@ module.exports = { upload, cloudinary };
 ```
 
 Update environment variables:
+
 ```env
 # Cloudinary
 CLOUDINARY_CLOUD_NAME=your_cloud_name
@@ -695,6 +733,7 @@ npm install @sentry/node @sentry/react
 ```
 
 Backend (`server/index.js`):
+
 ```javascript
 const Sentry = require('@sentry/node');
 
@@ -703,18 +742,19 @@ if (process.env.NODE_ENV === 'production') {
     dsn: process.env.SENTRY_DSN,
     environment: process.env.NODE_ENV,
   });
-  
+
   // Request handler must be first
   app.use(Sentry.Handlers.requestHandler());
-  
+
   // All routes here
-  
+
   // Error handler must be before other error middleware
   app.use(Sentry.Handlers.errorHandler());
 }
 ```
 
 Frontend (`client/src/index.tsx`):
+
 ```typescript
 import * as Sentry from '@sentry/react';
 
@@ -733,6 +773,7 @@ npm install swagger-jsdoc swagger-ui-express
 ```
 
 Create `server/config/swagger.js`:
+
 ```javascript
 const swaggerJsdoc = require('swagger-jsdoc');
 
@@ -746,9 +787,10 @@ const options = {
     },
     servers: [
       {
-        url: process.env.NODE_ENV === 'production' 
-          ? 'https://your-app.railway.app'
-          : 'http://localhost:5000',
+        url:
+          process.env.NODE_ENV === 'production'
+            ? 'https://your-app.railway.app'
+            : 'http://localhost:5000',
       },
     ],
   },
@@ -761,6 +803,7 @@ module.exports = swaggerSpec;
 ```
 
 Update `server/index.js`:
+
 ```javascript
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
@@ -769,6 +812,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 ```
 
 Add JSDoc comments to routes:
+
 ```javascript
 /**
  * @swagger
@@ -823,29 +867,32 @@ router.post('/login', validateLogin, authController.login);
 
 ### Metrics to Track
 
-| Metric | Week 1 | Week 4 | Target |
-|--------|--------|--------|--------|
-| Test Coverage | 5% | 20%+ | 60% |
+| Metric         | Week 1 | Week 4 | Target |
+| -------------- | ------ | ------ | ------ |
+| Test Coverage  | 5%     | 20%+   | 60%    |
 | Security Score | 40/100 | 70/100 | 90/100 |
-| Build Time | N/A | <5min | <5min |
-| Deployment | Manual | Auto | Auto |
+| Build Time     | N/A    | <5min  | <5min  |
+| Deployment     | Manual | Auto   | Auto   |
 
 ---
 
 ## 📚 Additional Resources
 
 ### Development Tools
+
 - **VS Code Extensions:** ESLint, Prettier, Jest
 - **Browser Extensions:** React DevTools, Redux DevTools
 - **API Testing:** Postman, Insomnia
 
 ### Learning Resources
+
 - [Jest Documentation](https://jestjs.io/)
 - [React Testing Library](https://testing-library.com/react)
 - [Node.js Security Best Practices](https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html)
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 
 ### Community Support
+
 - Stack Overflow
 - GitHub Discussions
 - Discord/Slack channels

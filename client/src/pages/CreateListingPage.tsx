@@ -9,8 +9,8 @@ const CreateListingPage: React.FC = () => {
           List Your Space
         </Typography>
         <Typography variant="body1">
-          This page will contain a comprehensive form for hosts to create new listings,
-          including space details, photos, pricing, availability, and amenities.
+          This page will contain a comprehensive form for hosts to create new listings, including
+          space details, photos, pricing, availability, and amenities.
         </Typography>
       </Paper>
     </Container>

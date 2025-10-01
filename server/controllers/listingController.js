@@ -13,7 +13,7 @@ const createListing = async (req, res) => {
       zipCode,
       pricePerHour,
       pricePerDay,
-      amenities
+      amenities,
     } = req.body;
 
     const listing = await prisma.listing.create({
@@ -30,7 +30,7 @@ const createListing = async (req, res) => {
         pricePerDay: pricePerDay ? parseFloat(pricePerDay) : null,
         amenities: amenities || [],
         images: [], // Will be updated when images are uploaded
-        hostId: req.user.id
+        hostId: req.user.id,
       },
       include: {
         host: {
@@ -39,15 +39,15 @@ const createListing = async (req, res) => {
             firstName: true,
             lastName: true,
             businessName: true,
-            avatar: true
-          }
-        }
-      }
+            avatar: true,
+          },
+        },
+      },
     });
 
     res.status(201).json({
       message: 'Listing created successfully',
-      listing
+      listing,
     });
   } catch (error) {
     console.error('Create listing error:', error);
@@ -65,7 +65,7 @@ const getListings = async (req, res) => {
       spaceType,
       minPrice,
       maxPrice,
-      search
+      search,
     } = req.query;
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
@@ -81,9 +81,9 @@ const getListings = async (req, res) => {
       ...(search && {
         OR: [
           { title: { contains: search, mode: 'insensitive' } },
-          { description: { contains: search, mode: 'insensitive' } }
-        ]
-      })
+          { description: { contains: search, mode: 'insensitive' } },
+        ],
+      }),
     };
 
     const [listings, total] = await Promise.all([
@@ -98,27 +98,28 @@ const getListings = async (req, res) => {
               firstName: true,
               lastName: true,
               businessName: true,
-              avatar: true
-            }
+              avatar: true,
+            },
           },
           reviews: {
             select: {
-              rating: true
-            }
-          }
+              rating: true,
+            },
+          },
         },
-        orderBy: { createdAt: 'desc' }
+        orderBy: { createdAt: 'desc' },
       }),
-      prisma.listing.count({ where })
+      prisma.listing.count({ where }),
     ]);
 
     // Calculate average rating for each listing
-    const listingsWithRating = listings.map(listing => ({
+    const listingsWithRating = listings.map((listing) => ({
       ...listing,
-      averageRating: listing.reviews.length > 0 
-        ? listing.reviews.reduce((sum, review) => sum + review.rating, 0) / listing.reviews.length 
-        : 0,
-      reviewCount: listing.reviews.length
+      averageRating:
+        listing.reviews.length > 0
+          ? listing.reviews.reduce((sum, review) => sum + review.rating, 0) / listing.reviews.length
+          : 0,
+      reviewCount: listing.reviews.length,
     }));
 
     res.json({
@@ -127,8 +128,8 @@ const getListings = async (req, res) => {
         page: parseInt(page),
         limit: parseInt(limit),
         total,
-        pages: Math.ceil(total / take)
-      }
+        pages: Math.ceil(total / take),
+      },
     });
   } catch (error) {
     console.error('Get listings error:', error);
@@ -151,8 +152,8 @@ const getListing = async (req, res) => {
             businessName: true,
             businessType: true,
             avatar: true,
-            createdAt: true
-          }
+            createdAt: true,
+          },
         },
         reviews: {
           include: {
@@ -161,19 +162,19 @@ const getListing = async (req, res) => {
                 id: true,
                 firstName: true,
                 lastName: true,
-                avatar: true
-              }
-            }
+                avatar: true,
+              },
+            },
           },
-          orderBy: { createdAt: 'desc' }
+          orderBy: { createdAt: 'desc' },
         },
         availability: {
           where: {
-            date: { gte: new Date() }
+            date: { gte: new Date() },
           },
-          orderBy: { date: 'asc' }
-        }
-      }
+          orderBy: { date: 'asc' },
+        },
+      },
     });
 
     if (!listing) {
@@ -181,14 +182,15 @@ const getListing = async (req, res) => {
     }
 
     // Calculate average rating
-    const averageRating = listing.reviews.length > 0 
-      ? listing.reviews.reduce((sum, review) => sum + review.rating, 0) / listing.reviews.length 
-      : 0;
+    const averageRating =
+      listing.reviews.length > 0
+        ? listing.reviews.reduce((sum, review) => sum + review.rating, 0) / listing.reviews.length
+        : 0;
 
     res.json({
       ...listing,
       averageRating,
-      reviewCount: listing.reviews.length
+      reviewCount: listing.reviews.length,
     });
   } catch (error) {
     console.error('Get listing error:', error);
@@ -202,7 +204,7 @@ const updateListing = async (req, res) => {
 
     // Check if listing exists and belongs to user
     const existingListing = await prisma.listing.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingListing) {
@@ -223,15 +225,15 @@ const updateListing = async (req, res) => {
             firstName: true,
             lastName: true,
             businessName: true,
-            avatar: true
-          }
-        }
-      }
+            avatar: true,
+          },
+        },
+      },
     });
 
     res.json({
       message: 'Listing updated successfully',
-      listing
+      listing,
     });
   } catch (error) {
     console.error('Update listing error:', error);
@@ -245,7 +247,7 @@ const deleteListing = async (req, res) => {
 
     // Check if listing exists and belongs to user
     const existingListing = await prisma.listing.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingListing) {
@@ -257,7 +259,7 @@ const deleteListing = async (req, res) => {
     }
 
     await prisma.listing.delete({
-      where: { id }
+      where: { id },
     });
 
     res.json({ message: 'Listing deleted successfully' });
@@ -274,27 +276,28 @@ const getMyListings = async (req, res) => {
       include: {
         reviews: {
           select: {
-            rating: true
-          }
+            rating: true,
+          },
         },
         bookings: {
           select: {
             id: true,
-            status: true
-          }
-        }
+            status: true,
+          },
+        },
       },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
     });
 
-    const listingsWithStats = listings.map(listing => ({
+    const listingsWithStats = listings.map((listing) => ({
       ...listing,
-      averageRating: listing.reviews.length > 0 
-        ? listing.reviews.reduce((sum, review) => sum + review.rating, 0) / listing.reviews.length 
-        : 0,
+      averageRating:
+        listing.reviews.length > 0
+          ? listing.reviews.reduce((sum, review) => sum + review.rating, 0) / listing.reviews.length
+          : 0,
       reviewCount: listing.reviews.length,
       bookingCount: listing.bookings.length,
-      activeBookings: listing.bookings.filter(b => b.status === 'CONFIRMED').length
+      activeBookings: listing.bookings.filter((b) => b.status === 'CONFIRMED').length,
     }));
 
     res.json({ listings: listingsWithStats });
@@ -310,5 +313,5 @@ module.exports = {
   getListing,
   updateListing,
   deleteListing,
-  getMyListings
+  getMyListings,
 };

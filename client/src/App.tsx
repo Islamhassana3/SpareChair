@@ -2,8 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
+import ErrorBoundary from './components/ErrorBoundary';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -233,24 +236,38 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AuthProvider>
-        <Router>
-          <div className="App">
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/listings" element={<ListingsPage />} />
-              <Route path="/listings/:id" element={<ListingDetailPage />} />
-              <Route path="/create-listing" element={<CreateListingPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/bookings" element={<BookingsPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-            </Routes>
-          </div>
-        </Router>
-      </AuthProvider>
+      <ErrorBoundary>
+        <AuthProvider>
+          <Router>
+            <div className="App">
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/listings" element={<ListingsPage />} />
+                <Route path="/listings/:id" element={<ListingDetailPage />} />
+                <Route path="/create-listing" element={<CreateListingPage />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/bookings" element={<BookingsPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+              </Routes>
+            </div>
+          </Router>
+        </AuthProvider>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </ErrorBoundary>
     </ThemeProvider>
   );
 }

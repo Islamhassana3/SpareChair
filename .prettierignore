@@ -1,0 +1,9 @@
+node_modules
+build
+dist
+coverage
+*.min.js
+*.min.css
+client/build
+package-lock.json
+client/package-lock.json

@@ -45,7 +45,11 @@ const LoginPage: React.FC = () => {
           Sign in to your ChairShare account
         </Typography>
 
-        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
           <TextField

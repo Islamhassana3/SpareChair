@@ -3,9 +3,10 @@ const {
   createReview,
   getReviews,
   updateReview,
-  deleteReview
+  deleteReview,
 } = require('../controllers/reviewController');
 const { authMiddleware } = require('../middleware/auth');
+const { validate, schemas } = require('../middleware/validate');
 
 const router = express.Router();
 
@@ -13,8 +14,8 @@ const router = express.Router();
 router.get('/', getReviews);
 
 // Protected routes
-router.post('/', authMiddleware, createReview);
-router.put('/:id', authMiddleware, updateReview);
+router.post('/', authMiddleware, validate(schemas.review), createReview);
+router.put('/:id', authMiddleware, validate(schemas.review), updateReview);
 router.delete('/:id', authMiddleware, deleteReview);
 
 module.exports = router;

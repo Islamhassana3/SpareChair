@@ -107,7 +107,11 @@ const RegisterPage: React.FC = () => {
           Create your account to start booking or hosting spaces
         </Typography>
 
-        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
           <Box sx={{ display: 'flex', gap: 2 }}>
@@ -167,12 +171,7 @@ const RegisterPage: React.FC = () => {
 
           <FormControl component="fieldset" sx={{ mt: 2 }}>
             <FormLabel component="legend">I want to:</FormLabel>
-            <RadioGroup
-              row
-              name="userType"
-              value={formData.userType}
-              onChange={handleChange}
-            >
+            <RadioGroup row name="userType" value={formData.userType} onChange={handleChange}>
               <FormControlLabel value="GUEST" control={<Radio />} label="Find Spaces (Guest)" />
               <FormControlLabel value="HOST" control={<Radio />} label="List My Spaces (Host)" />
             </RadioGroup>

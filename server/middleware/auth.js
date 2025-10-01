@@ -4,7 +4,7 @@ const prisma = require('../config/database');
 const authMiddleware = async (req, res, next) => {
   try {
     const token = req.header('Authorization')?.replace('Bearer ', '');
-    
+
     if (!token) {
       return res.status(401).json({ error: 'Access denied. No token provided.' });
     }
@@ -18,8 +18,8 @@ const authMiddleware = async (req, res, next) => {
         firstName: true,
         lastName: true,
         userType: true,
-        isVerified: true
-      }
+        isVerified: true,
+      },
     });
 
     if (!user) {
@@ -50,5 +50,5 @@ const adminMiddleware = (req, res, next) => {
 module.exports = {
   authMiddleware,
   hostMiddleware,
-  adminMiddleware
+  adminMiddleware,
 };

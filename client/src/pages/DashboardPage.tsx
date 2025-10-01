@@ -1,20 +1,20 @@
 import React from 'react';
-import { 
-  Container, 
-  Typography, 
-  Box, 
-  Paper, 
-  Grid, 
-  Card, 
-  CardContent, 
-  Avatar, 
+import {
+  Container,
+  Typography,
+  Box,
+  Paper,
+  Grid,
+  Card,
+  CardContent,
+  Avatar,
   Chip,
   LinearProgress,
   alpha,
 } from '@mui/material';
-import { 
-  EventNote, 
-  AttachMoney, 
+import {
+  EventNote,
+  AttachMoney,
   CalendarToday,
   Star,
   ArrowUpward,
@@ -66,7 +66,12 @@ const DashboardPage: React.FC = () => {
   ];
 
   const recentBookings = [
-    { title: 'Salon Chair - Downtown', date: 'Today, 10:00 AM', status: 'confirmed', amount: '$85' },
+    {
+      title: 'Salon Chair - Downtown',
+      date: 'Today, 10:00 AM',
+      status: 'confirmed',
+      amount: '$85',
+    },
     { title: 'Photography Studio', date: 'Tomorrow, 2:00 PM', status: 'pending', amount: '$150' },
     { title: 'Coworking Desk', date: 'Dec 28, 9:00 AM', status: 'confirmed', amount: '$45' },
     { title: 'Music Studio Pro', date: 'Dec 30, 3:00 PM', status: 'confirmed', amount: '$120' },
@@ -86,8 +91,8 @@ const DashboardPage: React.FC = () => {
       <Container maxWidth="xl" sx={{ py: 4 }}>
         {/* Header */}
         <Box sx={{ mb: 4 }}>
-          <Typography 
-            variant="h3" 
+          <Typography
+            variant="h3"
             gutterBottom
             sx={{ fontWeight: 800, color: 'text.primary', mb: 1 }}
           >
@@ -102,8 +107,8 @@ const DashboardPage: React.FC = () => {
         <Grid container spacing={3} sx={{ mb: 4 }}>
           {statsCards.map((stat, index) => (
             <Grid size={{ xs: 12, sm: 6, lg: 3 }} key={index}>
-              <Card 
-                sx={{ 
+              <Card
+                sx={{
                   height: '100%',
                   background: 'white',
                   position: 'relative',
@@ -120,9 +125,21 @@ const DashboardPage: React.FC = () => {
                 }}
               >
                 <CardContent sx={{ p: 3 }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      mb: 3,
+                    }}
+                  >
                     <Box>
-                      <Typography variant="body2" color="text.secondary" gutterBottom sx={{ fontWeight: 600, fontSize: '0.8125rem' }}>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        gutterBottom
+                        sx={{ fontWeight: 600, fontSize: '0.8125rem' }}
+                      >
                         {stat.title}
                       </Typography>
                       <Typography variant="h4" sx={{ fontWeight: 800, mb: 0.5 }}>
@@ -150,9 +167,9 @@ const DashboardPage: React.FC = () => {
                     ) : (
                       <ArrowDownward sx={{ fontSize: 16, color: 'error.main' }} />
                     )}
-                    <Typography 
-                      variant="body2" 
-                      sx={{ 
+                    <Typography
+                      variant="body2"
+                      sx={{
                         color: stat.trend === 'up' ? 'success.main' : 'error.main',
                         fontWeight: 700,
                         fontSize: '0.875rem',
@@ -160,7 +177,11 @@ const DashboardPage: React.FC = () => {
                     >
                       {stat.change}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ fontSize: '0.875rem' }}
+                    >
                       vs last month
                     </Typography>
                   </Box>
@@ -174,14 +195,21 @@ const DashboardPage: React.FC = () => {
           {/* Main Content */}
           <Grid size={{ xs: 12, lg: 8 }}>
             {/* Performance Chart */}
-            <Paper 
-              sx={{ 
+            <Paper
+              sx={{
                 p: 3,
                 mb: 3,
                 borderRadius: 3,
               }}
             >
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  mb: 4,
+                }}
+              >
                 <Box>
                   <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5 }}>
                     Performance Overview
@@ -190,28 +218,38 @@ const DashboardPage: React.FC = () => {
                     Your booking trends over the last 6 months
                   </Typography>
                 </Box>
-                <Chip 
+                <Chip
                   label="Last 6 Months"
                   size="small"
-                  sx={{ 
+                  sx={{
                     fontWeight: 600,
                     backgroundColor: alpha('#6366F1', 0.1),
                     color: 'primary.main',
                   }}
                 />
               </Box>
-              
+
               {/* Simple Bar Chart Representation */}
               <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: 200 }}>
                 {performanceData.map((data, index) => (
-                  <Box key={index} sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
-                    <Box 
-                      sx={{ 
+                  <Box
+                    key={index}
+                    sx={{
+                      flex: 1,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: 1,
+                    }}
+                  >
+                    <Box
+                      sx={{
                         width: '100%',
                         height: `${data.value}%`,
-                        background: index === performanceData.length - 1 
-                          ? 'linear-gradient(180deg, #6366F1 0%, #8B5CF6 100%)'
-                          : alpha('#6366F1', 0.3),
+                        background:
+                          index === performanceData.length - 1
+                            ? 'linear-gradient(180deg, #6366F1 0%, #8B5CF6 100%)'
+                            : alpha('#6366F1', 0.3),
                         borderRadius: 2,
                         transition: 'all 0.3s ease',
                         '&:hover': {
@@ -229,19 +267,26 @@ const DashboardPage: React.FC = () => {
             </Paper>
 
             {/* Recent Bookings */}
-            <Paper 
-              sx={{ 
+            <Paper
+              sx={{
                 p: 3,
                 borderRadius: 3,
               }}
             >
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  mb: 3,
+                }}
+              >
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
                   Recent Bookings
                 </Typography>
-                <Typography 
-                  variant="body2" 
-                  sx={{ 
+                <Typography
+                  variant="body2"
+                  sx={{
                     color: 'primary.main',
                     fontWeight: 600,
                     cursor: 'pointer',
@@ -252,9 +297,9 @@ const DashboardPage: React.FC = () => {
                 </Typography>
               </Box>
               {recentBookings.map((booking, index) => (
-                <Box 
+                <Box
                   key={index}
-                  sx={{ 
+                  sx={{
                     display: 'flex',
                     alignItems: 'center',
                     py: 2.5,
@@ -268,8 +313,8 @@ const DashboardPage: React.FC = () => {
                     },
                   }}
                 >
-                  <Avatar 
-                    sx={{ 
+                  <Avatar
+                    sx={{
                       mr: 2,
                       width: 48,
                       height: 48,
@@ -282,7 +327,11 @@ const DashboardPage: React.FC = () => {
                     <Typography variant="body1" sx={{ fontWeight: 600, mb: 0.5 }}>
                       {booking.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ fontSize: '0.875rem' }}
+                    >
                       {booking.date}
                     </Typography>
                   </Box>
@@ -294,9 +343,10 @@ const DashboardPage: React.FC = () => {
                       label={booking.status}
                       size="small"
                       sx={{
-                        backgroundColor: booking.status === 'confirmed' 
-                          ? alpha('#10B981', 0.1)
-                          : alpha('#F59E0B', 0.1),
+                        backgroundColor:
+                          booking.status === 'confirmed'
+                            ? alpha('#10B981', 0.1)
+                            : alpha('#F59E0B', 0.1),
                         color: booking.status === 'confirmed' ? 'success.main' : 'warning.main',
                         fontWeight: 600,
                         fontSize: '0.75rem',
@@ -312,8 +362,8 @@ const DashboardPage: React.FC = () => {
           {/* Sidebar */}
           <Grid size={{ xs: 12, lg: 4 }}>
             {/* Profile Card */}
-            <Paper 
-              sx={{ 
+            <Paper
+              sx={{
                 p: 3,
                 mb: 3,
                 borderRadius: 3,
@@ -322,8 +372,8 @@ const DashboardPage: React.FC = () => {
               }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                <Avatar 
-                  sx={{ 
+                <Avatar
+                  sx={{
                     width: 64,
                     height: 64,
                     mr: 2,
@@ -339,7 +389,7 @@ const DashboardPage: React.FC = () => {
                   <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5 }}>
                     {user?.firstName || 'User'} {user?.lastName || ''}
                   </Typography>
-                  <Chip 
+                  <Chip
                     label={user?.userType || 'GUEST'}
                     size="small"
                     sx={{
@@ -380,8 +430,8 @@ const DashboardPage: React.FC = () => {
             </Paper>
 
             {/* Quick Actions */}
-            <Paper 
-              sx={{ 
+            <Paper
+              sx={{
                 p: 3,
                 mb: 3,
                 borderRadius: 3,
@@ -423,8 +473,8 @@ const DashboardPage: React.FC = () => {
             </Paper>
 
             {/* Activity Progress */}
-            <Paper 
-              sx={{ 
+            <Paper
+              sx={{
                 p: 3,
                 borderRadius: 3,
               }}
@@ -441,10 +491,10 @@ const DashboardPage: React.FC = () => {
                     32 / 40
                   </Typography>
                 </Box>
-                <LinearProgress 
-                  variant="determinate" 
-                  value={80} 
-                  sx={{ 
+                <LinearProgress
+                  variant="determinate"
+                  value={80}
+                  sx={{
                     height: 8,
                     borderRadius: 4,
                     backgroundColor: alpha('#6366F1', 0.1),
@@ -464,10 +514,10 @@ const DashboardPage: React.FC = () => {
                     $12.4k / $15k
                   </Typography>
                 </Box>
-                <LinearProgress 
-                  variant="determinate" 
-                  value={83} 
-                  sx={{ 
+                <LinearProgress
+                  variant="determinate"
+                  value={83}
+                  sx={{
                     height: 8,
                     borderRadius: 4,
                     backgroundColor: alpha('#10B981', 0.1),

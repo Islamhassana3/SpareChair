@@ -8,11 +8,7 @@ const ProfilePage: React.FC = () => {
       <Container maxWidth="lg">
         {/* Header */}
         <Box sx={{ mb: 4 }}>
-          <Typography 
-            variant="h4" 
-            gutterBottom
-            sx={{ fontWeight: 700, color: 'text.primary' }}
-          >
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, color: 'text.primary' }}>
             Profile Settings
           </Typography>
           <Typography variant="body1" color="text.secondary">
@@ -23,8 +19,8 @@ const ProfilePage: React.FC = () => {
         <Grid container spacing={3}>
           {/* Profile Card */}
           <Grid size={{ xs: 12, md: 4 }}>
-            <Paper 
-              sx={{ 
+            <Paper
+              sx={{
                 p: 3,
                 textAlign: 'center',
                 border: '1px solid',
@@ -32,9 +28,9 @@ const ProfilePage: React.FC = () => {
               }}
             >
               <Box sx={{ position: 'relative', display: 'inline-block', mb: 2 }}>
-                <Avatar 
-                  sx={{ 
-                    width: 120, 
+                <Avatar
+                  sx={{
+                    width: 120,
                     height: 120,
                     mx: 'auto',
                     backgroundColor: 'primary.main',
@@ -69,7 +65,7 @@ const ProfilePage: React.FC = () => {
               <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
                 John Doe
               </Typography>
-              <Chip 
+              <Chip
                 label="GUEST"
                 size="small"
                 sx={{
@@ -89,8 +85,8 @@ const ProfilePage: React.FC = () => {
           <Grid size={{ xs: 12, md: 8 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
               {/* Personal Information */}
-              <Paper 
-                sx={{ 
+              <Paper
+                sx={{
                   p: 3,
                   border: '1px solid',
                   borderColor: 'grey.200',
@@ -103,13 +99,14 @@ const ProfilePage: React.FC = () => {
                   </Typography>
                 </Box>
                 <Typography variant="body2" color="text.secondary">
-                  Edit your personal details including name, email, phone number, and contact preferences.
+                  Edit your personal details including name, email, phone number, and contact
+                  preferences.
                 </Typography>
               </Paper>
 
               {/* Business Details */}
-              <Paper 
-                sx={{ 
+              <Paper
+                sx={{
                   p: 3,
                   border: '1px solid',
                   borderColor: 'grey.200',
@@ -127,8 +124,8 @@ const ProfilePage: React.FC = () => {
               </Paper>
 
               {/* Verification */}
-              <Paper 
-                sx={{ 
+              <Paper
+                sx={{
                   p: 3,
                   border: '1px solid',
                   borderColor: 'grey.200',
@@ -141,13 +138,14 @@ const ProfilePage: React.FC = () => {
                   </Typography>
                 </Box>
                 <Typography variant="body2" color="text.secondary">
-                  Upload your ID documents for verification to increase trust and unlock additional features.
+                  Upload your ID documents for verification to increase trust and unlock additional
+                  features.
                 </Typography>
               </Paper>
 
               {/* Payment Methods */}
-              <Paper 
-                sx={{ 
+              <Paper
+                sx={{
                   p: 3,
                   border: '1px solid',
                   borderColor: 'grey.200',

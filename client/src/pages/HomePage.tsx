@@ -13,13 +13,7 @@ import {
   InputAdornment,
   alpha,
 } from '@mui/material';
-import { 
-  Search, 
-  Chair, 
-  TrendingUp,
-  CheckCircle,
-  ArrowForward,
-} from '@mui/icons-material';
+import { Search, Chair, TrendingUp, CheckCircle, ArrowForward } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
@@ -40,7 +34,8 @@ const HomePage: React.FC = () => {
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.3) 0%, transparent 50%)',
+            background:
+              'radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.3) 0%, transparent 50%)',
           },
           '&::after': {
             content: '""',
@@ -72,12 +67,12 @@ const HomePage: React.FC = () => {
                 }}
               />
             </Box>
-            
-            <Typography 
-              variant="h1" 
-              component="h1" 
+
+            <Typography
+              variant="h1"
+              component="h1"
               gutterBottom
-              sx={{ 
+              sx={{
                 fontSize: { xs: '2.75rem', sm: '3.5rem', md: '4.5rem' },
                 fontWeight: 800,
                 mb: 3,
@@ -87,9 +82,9 @@ const HomePage: React.FC = () => {
             >
               Find Your Perfect
               <br />
-              <Box 
-                component="span" 
-                sx={{ 
+              <Box
+                component="span"
+                sx={{
                   background: 'linear-gradient(135deg, #A5B4FC 0%, #C4B5FD 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -99,11 +94,11 @@ const HomePage: React.FC = () => {
                 Workspace
               </Box>
             </Typography>
-            
-            <Typography 
-              variant="h5" 
+
+            <Typography
+              variant="h5"
               gutterBottom
-              sx={{ 
+              sx={{
                 fontSize: { xs: '1.125rem', md: '1.375rem' },
                 fontWeight: 400,
                 opacity: 0.95,
@@ -114,9 +109,10 @@ const HomePage: React.FC = () => {
               }}
             >
               Connect with thousands of professional spaces. Book by the hour or day.
-              <br />From salon chairs to studios — your perfect space awaits.
+              <br />
+              From salon chairs to studios — your perfect space awaits.
             </Typography>
-            
+
             {/* Search Bar */}
             <Box sx={{ mt: 5, maxWidth: 680, mx: 'auto' }}>
               <Box
@@ -168,12 +164,12 @@ const HomePage: React.FC = () => {
                 </Button>
               </Box>
             </Box>
-            
+
             {/* Stats */}
-            <Box 
-              sx={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
                 gap: { xs: 3, sm: 6 },
                 mt: 6,
                 flexWrap: 'wrap',
@@ -185,19 +181,19 @@ const HomePage: React.FC = () => {
                 { value: '4.9/5', label: 'Average Rating' },
               ].map((stat, index) => (
                 <Box key={index} sx={{ textAlign: 'center' }}>
-                  <Typography 
-                    variant="h4" 
-                    sx={{ 
-                      fontWeight: 800, 
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: 800,
                       mb: 0.5,
                       fontSize: { xs: '1.75rem', md: '2.25rem' },
                     }}
                   >
                     {stat.value}
                   </Typography>
-                  <Typography 
-                    variant="body2" 
-                    sx={{ 
+                  <Typography
+                    variant="body2"
+                    sx={{
                       opacity: 0.9,
                       fontSize: '0.9375rem',
                     }}
@@ -226,11 +222,11 @@ const HomePage: React.FC = () => {
               mb: 2,
             }}
           />
-          <Typography 
-            variant="h2" 
-            component="h2" 
+          <Typography
+            variant="h2"
+            component="h2"
             gutterBottom
-            sx={{ 
+            sx={{
               fontSize: { xs: '2.25rem', md: '3rem' },
               fontWeight: 800,
               color: 'text.primary',
@@ -241,43 +237,46 @@ const HomePage: React.FC = () => {
             <br />
             In One Platform
           </Typography>
-          <Typography 
-            variant="subtitle1" 
+          <Typography
+            variant="subtitle1"
             color="text.secondary"
             sx={{ maxWidth: 600, mx: 'auto', fontSize: '1.125rem' }}
           >
             The most intuitive way to find, book, and manage professional spaces
           </Typography>
         </Box>
-        
+
         <Grid container spacing={4}>
           {[
             {
               icon: Search,
               title: 'Smart Discovery',
-              description: 'Advanced filtering and AI-powered recommendations help you find exactly what you need in seconds.',
+              description:
+                'Advanced filtering and AI-powered recommendations help you find exactly what you need in seconds.',
               color: '#6366F1',
               gradient: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
             },
             {
               icon: Chair,
               title: 'Instant Booking',
-              description: 'Book your perfect space with just a few clicks. Secure payments, real-time availability, and instant confirmation.',
+              description:
+                'Book your perfect space with just a few clicks. Secure payments, real-time availability, and instant confirmation.',
               color: '#8B5CF6',
               gradient: 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%)',
             },
             {
               icon: TrendingUp,
               title: 'Grow Your Business',
-              description: 'Whether you\'re booking or hosting, our platform helps you maximize productivity and revenue.',
+              description:
+                "Whether you're booking or hosting, our platform helps you maximize productivity and revenue.",
               color: '#10B981',
               gradient: 'linear-gradient(135deg, #10B981 0%, #3B82F6 100%)',
             },
           ].map((feature, index) => (
             <Grid size={{ xs: 12, md: 4 }} key={index}>
-              <Card 
-                sx={{ 
-                  textAlign: 'center', 
+              <Card
+                sx={{
+                  textAlign: 'center',
                   p: 4,
                   height: '100%',
                   background: 'white',
@@ -320,28 +319,30 @@ const HomePage: React.FC = () => {
             </Grid>
           ))}
         </Grid>
-        
+
         {/* Trust Indicators */}
         <Box sx={{ mt: 10, textAlign: 'center' }}>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontWeight: 600 }}>
             TRUSTED BY LEADING PROFESSIONALS
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
-            {['Verified Hosts', 'Secure Payments', '24/7 Support', 'Money-Back Guarantee'].map((badge, index) => (
-              <Chip
-                key={index}
-                icon={<CheckCircle sx={{ fontSize: 16 }} />}
-                label={badge}
-                sx={{
-                  backgroundColor: alpha('#10B981', 0.1),
-                  color: 'success.main',
-                  fontWeight: 600,
-                  py: 2.5,
-                  px: 1,
-                  fontSize: '0.875rem',
-                }}
-              />
-            ))}
+            {['Verified Hosts', 'Secure Payments', '24/7 Support', 'Money-Back Guarantee'].map(
+              (badge, index) => (
+                <Chip
+                  key={index}
+                  icon={<CheckCircle sx={{ fontSize: 16 }} />}
+                  label={badge}
+                  sx={{
+                    backgroundColor: alpha('#10B981', 0.1),
+                    color: 'success.main',
+                    fontWeight: 600,
+                    py: 2.5,
+                    px: 1,
+                    fontSize: '0.875rem',
+                  }}
+                />
+              )
+            )}
           </Box>
         </Box>
       </Container>
@@ -362,11 +363,11 @@ const HomePage: React.FC = () => {
                 mb: 2,
               }}
             />
-            <Typography 
-              variant="h2" 
-              component="h2" 
+            <Typography
+              variant="h2"
+              component="h2"
               gutterBottom
-              sx={{ 
+              sx={{
                 fontSize: { xs: '2.25rem', md: '3rem' },
                 fontWeight: 800,
                 color: 'text.primary',
@@ -375,27 +376,57 @@ const HomePage: React.FC = () => {
             >
               Popular Space Types
             </Typography>
-            <Typography 
-              variant="subtitle1" 
+            <Typography
+              variant="subtitle1"
               color="text.secondary"
               sx={{ maxWidth: 600, mx: 'auto', fontSize: '1.125rem' }}
             >
               Discover thousands of professional spaces tailored to your needs
             </Typography>
           </Box>
-          
+
           <Grid container spacing={3}>
             {[
-              { name: 'Salon Chairs', image: '/api/placeholder/400/300', count: '120+', color: '#EC4899' },
-              { name: 'Photography Studios', image: '/api/placeholder/400/300', count: '85+', color: '#F59E0B' },
-              { name: 'Massage Therapy', image: '/api/placeholder/400/300', count: '95+', color: '#8B5CF6' },
-              { name: 'Coworking Desks', image: '/api/placeholder/400/300', count: '150+', color: '#3B82F6' },
-              { name: 'Art Studios', image: '/api/placeholder/400/300', count: '40+', color: '#10B981' },
-              { name: 'Music Studios', image: '/api/placeholder/400/300', count: '30+', color: '#EF4444' },
+              {
+                name: 'Salon Chairs',
+                image: '/api/placeholder/400/300',
+                count: '120+',
+                color: '#EC4899',
+              },
+              {
+                name: 'Photography Studios',
+                image: '/api/placeholder/400/300',
+                count: '85+',
+                color: '#F59E0B',
+              },
+              {
+                name: 'Massage Therapy',
+                image: '/api/placeholder/400/300',
+                count: '95+',
+                color: '#8B5CF6',
+              },
+              {
+                name: 'Coworking Desks',
+                image: '/api/placeholder/400/300',
+                count: '150+',
+                color: '#3B82F6',
+              },
+              {
+                name: 'Art Studios',
+                image: '/api/placeholder/400/300',
+                count: '40+',
+                color: '#10B981',
+              },
+              {
+                name: 'Music Studios',
+                image: '/api/placeholder/400/300',
+                count: '30+',
+                color: '#EF4444',
+              },
             ].map((space, index) => (
               <Grid size={{ xs: 12, sm: 6, md: 4 }} key={space.name}>
-                <Card 
-                  sx={{ 
+                <Card
+                  sx={{
                     height: '100%',
                     cursor: 'pointer',
                     overflow: 'hidden',
@@ -426,7 +457,7 @@ const HomePage: React.FC = () => {
                       height="240"
                       image={space.image}
                       alt={space.name}
-                      sx={{ 
+                      sx={{
                         objectFit: 'cover',
                         transition: 'transform 0.3s ease-in-out',
                       }}
@@ -444,9 +475,9 @@ const HomePage: React.FC = () => {
                         boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
                       }}
                     >
-                      <Typography 
-                        variant="body2" 
-                        sx={{ 
+                      <Typography
+                        variant="body2"
+                        sx={{
                           fontWeight: 700,
                           color: space.color,
                         }}
@@ -455,19 +486,19 @@ const HomePage: React.FC = () => {
                       </Typography>
                     </Box>
                   </Box>
-                  <CardContent 
+                  <CardContent
                     className="space-content"
-                    sx={{ 
+                    sx={{
                       p: 3,
                       position: 'relative',
                       zIndex: 2,
                       transition: 'all 0.3s ease-in-out',
                     }}
                   >
-                    <Typography 
-                      variant="h6" 
-                      gutterBottom 
-                      sx={{ 
+                    <Typography
+                      variant="h6"
+                      gutterBottom
+                      sx={{
                         fontWeight: 700,
                         mb: 1,
                       }}
@@ -490,8 +521,8 @@ const HomePage: React.FC = () => {
 
       {/* CTA Section */}
       <Container maxWidth="lg" sx={{ py: { xs: 10, md: 14 } }}>
-        <Box 
-          sx={{ 
+        <Box
+          sx={{
             background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
             borderRadius: 6,
             p: { xs: 6, md: 10 },
@@ -504,16 +535,19 @@ const HomePage: React.FC = () => {
               left: 0,
               right: 0,
               bottom: 0,
-              background: 'radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.4) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.4) 0%, transparent 50%)',
+              background:
+                'radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.4) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.4) 0%, transparent 50%)',
             },
           }}
         >
-          <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: 700, mx: 'auto' }}>
-            <Typography 
-              variant="h2" 
-              component="h2" 
+          <Box
+            sx={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: 700, mx: 'auto' }}
+          >
+            <Typography
+              variant="h2"
+              component="h2"
               gutterBottom
-              sx={{ 
+              sx={{
                 fontSize: { xs: '2rem', md: '3rem' },
                 fontWeight: 800,
                 color: 'white',
@@ -524,10 +558,10 @@ const HomePage: React.FC = () => {
               <br />
               Workspace Experience?
             </Typography>
-            <Typography 
-              variant="h6" 
+            <Typography
+              variant="h6"
               gutterBottom
-              sx={{ 
+              sx={{
                 opacity: 0.95,
                 fontWeight: 400,
                 mb: 5,
@@ -536,8 +570,8 @@ const HomePage: React.FC = () => {
                 lineHeight: 1.7,
               }}
             >
-              Join thousands of professionals and businesses who trust ChairShare
-              for their workspace needs
+              Join thousands of professionals and businesses who trust ChairShare for their
+              workspace needs
             </Typography>
             <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', flexWrap: 'wrap' }}>
               <Button
@@ -546,7 +580,7 @@ const HomePage: React.FC = () => {
                 component={Link}
                 to="/register"
                 endIcon={<ArrowForward />}
-                sx={{ 
+                sx={{
                   px: 5,
                   py: 2,
                   backgroundColor: 'white',
@@ -566,7 +600,7 @@ const HomePage: React.FC = () => {
                 size="large"
                 component={Link}
                 to="/listings"
-                sx={{ 
+                sx={{
                   px: 5,
                   py: 2,
                   color: 'white',
@@ -584,9 +618,9 @@ const HomePage: React.FC = () => {
                 Browse Spaces
               </Button>
             </Box>
-            <Typography 
-              variant="body2" 
-              sx={{ 
+            <Typography
+              variant="body2"
+              sx={{
                 mt: 4,
                 color: 'white',
                 opacity: 0.8,

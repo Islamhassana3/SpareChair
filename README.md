@@ -18,6 +18,7 @@ ChairShare is an Airbnb-style platform for service-based businesses with unused 
 ## 🚀 Features
 
 ### For Space Seekers (Guests)
+
 - **Discover Spaces**: Search and filter professional spaces by location, type, amenities, and price
 - **Flexible Booking**: Book spaces by the hour or day with instant confirmation
 - **Secure Payments**: Safe payment processing with Stripe integration
@@ -25,6 +26,7 @@ ChairShare is an Airbnb-style platform for service-based businesses with unused 
 - **User Dashboard**: Track bookings, manage preferences, and view history
 
 ### For Space Providers (Hosts)
+
 - **List Your Space**: Create detailed listings with photos, amenities, and pricing
 - **Manage Availability**: Set your schedule and pricing preferences
 - **Booking Management**: Accept/decline requests and communicate with guests
@@ -32,6 +34,7 @@ ChairShare is an Airbnb-style platform for service-based businesses with unused 
 - **Professional Profile**: Build your reputation through reviews and verification
 
 ### Core Platform Features
+
 - **User Authentication**: Secure JWT-based authentication system
 - **ID Verification**: Trust and safety through identity verification
 - **Real-time Notifications**: Stay updated on bookings and messages
@@ -41,6 +44,7 @@ ChairShare is an Airbnb-style platform for service-based businesses with unused 
 ## 🛠️ Technology Stack
 
 ### Backend
+
 - **Node.js** with Express.js framework
 - **PostgreSQL** database with Prisma ORM
 - **JWT** for authentication
@@ -49,6 +53,7 @@ ChairShare is an Airbnb-style platform for service-based businesses with unused 
 - **Nodemailer** for email notifications
 
 ### Frontend
+
 - **React** with TypeScript
 - **Material-UI** for component library
 - **React Router** for navigation
@@ -56,6 +61,7 @@ ChairShare is an Airbnb-style platform for service-based businesses with unused 
 - **Context API** for state management
 
 ### Database Schema
+
 - **Users**: Authentication and profile management
 - **Listings**: Space details and host information
 - **Bookings**: Reservation management and status tracking
@@ -66,6 +72,7 @@ ChairShare is an Airbnb-style platform for service-based businesses with unused 
 ## 📦 Installation
 
 ### Prerequisites
+
 - Node.js (v16 or higher)
 - PostgreSQL database
 - Stripe account for payments
@@ -73,22 +80,26 @@ ChairShare is an Airbnb-style platform for service-based businesses with unused 
 ### Environment Setup
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/Islamhassana3/SpareChair.git
 cd SpareChair
 ```
 
 2. **Install dependencies**
+
 ```bash
 npm run install-deps
 ```
 
 3. **Set up environment variables**
+
 ```bash
 cp .env.example .env
 ```
 
 Edit `.env` with your configuration:
+
 ```
 DATABASE_URL="postgresql://username:password@localhost:5432/chairshare"
 JWT_SECRET="your-jwt-secret-key-here"
@@ -104,23 +115,27 @@ CLIENT_URL=http://localhost:3000
 ```
 
 4. **Set up the database**
+
 ```bash
 npx prisma generate
 npx prisma db push
 ```
 
 5. **Start the development servers**
+
 ```bash
 npm run dev
 ```
 
 This will start:
+
 - Backend server on http://localhost:5000
 - React frontend on http://localhost:3000
 
 ## 🚀 Usage
 
 ### Development
+
 ```bash
 # Start both frontend and backend
 npm run dev
@@ -136,6 +151,7 @@ npm run build
 ```
 
 ### Production Deployment
+
 ```bash
 # Build the React app
 npm run build
@@ -149,11 +165,13 @@ npm start
 ChairShare is optimized for deployment on Railway.app with the following features:
 
 ### Quick Deploy
+
 1. **One-Click Deploy**: Connect your GitHub repository to Railway
 2. **Auto-Configuration**: Includes `railway.toml`, `nixpacks.toml`, and `Procfile`
 3. **Database Setup**: Add PostgreSQL service for automatic DATABASE_URL configuration
 
 ### Railway-Specific Optimizations
+
 - ✅ **Optimized Build Process**: Efficient multi-stage build with dependency caching
 - ✅ **Health Checks**: Enhanced `/api/health` endpoint with database connectivity monitoring
 - ✅ **Environment Handling**: Production-ready CORS and proxy configuration
@@ -162,6 +180,7 @@ ChairShare is optimized for deployment on Railway.app with the following feature
 - ✅ **Process Management**: Railway-aware startup scripts and error handling
 
 ### Configuration Files
+
 - `railway.toml` - Railway platform configuration
 - `nixpacks.toml` - Build environment specification
 - `Procfile` - Process definition for Railway
@@ -170,6 +189,7 @@ ChairShare is optimized for deployment on Railway.app with the following feature
 - `RAILWAY_DEPLOYMENT.md` - Detailed deployment guide
 
 ### Required Environment Variables
+
 ```bash
 DATABASE_URL=postgresql://...    # Auto-provided by Railway PostgreSQL
 JWT_SECRET=your-secure-secret
@@ -184,11 +204,13 @@ CLIENT_URL=https://your-app.railway.app
 ## 📱 API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
 - `GET /api/auth/profile` - Get user profile
 
 ### Listings
+
 - `GET /api/listings` - Get all listings (with filters)
 - `GET /api/listings/:id` - Get specific listing
 - `POST /api/listings` - Create new listing (Host only)
@@ -196,6 +218,7 @@ CLIENT_URL=https://your-app.railway.app
 - `DELETE /api/listings/:id` - Delete listing (Host only)
 
 ### Bookings
+
 - `POST /api/bookings` - Create booking request
 - `GET /api/bookings` - Get user's bookings
 - `GET /api/bookings/:id` - Get specific booking
@@ -203,6 +226,7 @@ CLIENT_URL=https://your-app.railway.app
 - `PUT /api/bookings/:id/cancel` - Cancel booking
 
 ### Reviews
+
 - `POST /api/reviews` - Create review
 - `GET /api/reviews` - Get reviews (with filters)
 - `PUT /api/reviews/:id` - Update review
