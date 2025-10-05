@@ -144,19 +144,20 @@ curl http://localhost:3000
 ### 4. Port Already in Use
 
 **Symptoms:**
-- Error: "Port 3000 is already in use"
-- Error: "Port 5000 is already in use"
+- Error: "Port 5000 is already in use" (backend only)
 
-**Solution:**
+**Note for Frontend:**
+The preview scripts (`preview.sh`, `preview.bat`, `preview.ps1`) now automatically find an available port starting from 3000. If port 3000 is in use, they will automatically use the next available port (3001, 3002, etc.) without requiring manual intervention.
+
+**Solution for Backend:**
 
 1. **Find and kill process using the port:**
    ```bash
    # macOS/Linux
-   lsof -ti:3000 | xargs kill -9   # For frontend
    lsof -ti:5000 | xargs kill -9   # For backend
    
    # Windows
-   netstat -ano | findstr :3000
+   netstat -ano | findstr :5000
    taskkill /PID <PID> /F
    ```
 
@@ -165,8 +166,14 @@ curl http://localhost:3000
    # Backend
    PORT=5001 npm run server
    
-   # Update client/package.json proxy or .env
-   CLIENT_URL=http://localhost:3001
+   # Update .env
+   PORT=5001
+   ```
+
+3. **For frontend manual port selection (without preview scripts):**
+   ```bash
+   # Set PORT environment variable before starting
+   PORT=3001 npm start  # Will use port 3001
    ```
 
 ### 5. Dependencies Installation Issues

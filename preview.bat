@@ -64,29 +64,36 @@ if not exist "node_modules\" (
 echo [OK] All dependencies are ready
 echo.
 
-REM Check if port 3000 is already in use
-netstat -ano | findstr :3000 | findstr LISTENING >nul 2>&1
-if %errorlevel% equ 0 (
-    echo [WARNING] Port 3000 is already in use
-    set /p response="Would you like to kill the existing process? (y/n): "
-    if /i "!response!"=="y" (
-        echo Killing process on port 3000...
-        for /f "tokens=5" %%a in ('netstat -ano ^| findstr :3000 ^| findstr LISTENING') do (
-            taskkill /F /PID %%a >nul 2>&1
-        )
-        echo [OK] Port 3000 is now free
-        echo.
-    ) else (
-        echo Please free port 3000 and try again.
-        pause
-        exit /b 1
-    )
+REM Find an available port starting from 3000
+echo [INFO] Searching for an available port...
+set PORT=3000
+set MAX_PORT=3100
+
+:FIND_PORT
+if %PORT% gtr %MAX_PORT% (
+    echo [ERROR] Could not find an available port between 3000-3100
+    echo Please free some ports and try again.
+    pause
+    exit /b 1
 )
+
+netstat -ano | findstr :%PORT% | findstr LISTENING >nul 2>&1
+if %errorlevel% equ 0 (
+    set /a PORT+=1
+    goto FIND_PORT
+)
+
+if %PORT% neq 3000 (
+    echo [WARNING] Port 3000 is in use, using port %PORT% instead
+) else (
+    echo [OK] Port 3000 is available
+)
+echo.
 
 echo.
 echo ============================================
 echo    Starting ChairShare preview
-echo    http://localhost:3000
+echo    http://localhost:%PORT%
 echo ============================================
 echo.
 echo    The application will open in your browser shortly...
@@ -99,7 +106,8 @@ REM Wait a moment before starting
 timeout /t 2 /nobreak >nul
 
 REM Start browser in background after a delay
-start "" cmd /c "timeout /t 5 /nobreak >nul && start http://localhost:3000"
+start "" cmd /c "timeout /t 5 /nobreak >nul && start http://localhost:%PORT%"
 
 REM Start the development server
+set PORT=%PORT%
 call npm start
