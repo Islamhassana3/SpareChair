@@ -70,30 +70,44 @@ if (-not (Test-Path "node_modules")) {
 Write-Host "[OK] All dependencies are ready" -ForegroundColor Green
 Write-Host ""
 
-# Check if port 3000 is already in use
-$port3000InUse = Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue
-if ($port3000InUse) {
-    Write-Host "[WARNING] Port 3000 is already in use" -ForegroundColor Yellow
-    $response = Read-Host "Would you like to kill the existing process? (y/n)"
-    if ($response -eq "y" -or $response -eq "Y") {
-        Write-Host "Killing process on port 3000..." -ForegroundColor Blue
-        $processIds = $port3000InUse | Select-Object -ExpandProperty OwningProcess -Unique
-        foreach ($pid in $processIds) {
-            Stop-Process -Id $pid -Force -ErrorAction SilentlyContinue
+# Function to find an available port
+function Find-AvailablePort {
+    param($startPort)
+    
+    $maxPort = $startPort + 100
+    
+    for ($port = $startPort; $port -le $maxPort; $port++) {
+        $portInUse = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue
+        if (-not $portInUse) {
+            return $port
         }
-        Write-Host "[OK] Port 3000 is now free" -ForegroundColor Green
-        Write-Host ""
-    } else {
-        Write-Host "Please free port 3000 and try again." -ForegroundColor Yellow
-        Read-Host "Press Enter to exit"
-        exit 1
     }
+    
+    return $null
 }
+
+# Find an available port starting from 3000
+Write-Host "[INFO] Searching for an available port..." -ForegroundColor Blue
+$PORT = Find-AvailablePort -startPort 3000
+
+if ($null -eq $PORT) {
+    Write-Host "[ERROR] Could not find an available port between 3000-3100" -ForegroundColor Red
+    Write-Host "Please free some ports and try again." -ForegroundColor Yellow
+    Read-Host "Press Enter to exit"
+    exit 1
+}
+
+if ($PORT -ne 3000) {
+    Write-Host "[WARNING] Port 3000 is in use, using port $PORT instead" -ForegroundColor Yellow
+} else {
+    Write-Host "[OK] Port 3000 is available" -ForegroundColor Green
+}
+Write-Host ""
 
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "   Starting ChairShare preview" -ForegroundColor Cyan
-Write-Host "   http://localhost:3000" -ForegroundColor Green
+Write-Host "   http://localhost:$PORT" -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "   The application will open in your browser shortly..." -ForegroundColor Yellow
@@ -107,9 +121,13 @@ Start-Sleep -Seconds 2
 
 # Start browser in background after a delay
 $job = Start-Job -ScriptBlock {
+    param($port)
     Start-Sleep -Seconds 5
-    Start-Process "http://localhost:3000"
-}
+    Start-Process "http://localhost:$port"
+} -ArgumentList $PORT
+
+# Set PORT environment variable for npm start
+$env:PORT = $PORT
 
 # Start the development server
 npm start

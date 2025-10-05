@@ -50,23 +50,44 @@ fi
 echo -e "${GREEN}✓${NC} All dependencies are ready"
 echo ""
 
-# Check if port 3000 is already in use
-if lsof -Pi :3000 -sTCP:LISTEN -t >/dev/null 2>&1 ; then
-    echo -e "${YELLOW}⚠️  Port 3000 is already in use${NC}"
-    echo "Would you like to kill the existing process? (y/n)"
-    read -r response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        echo "Killing process on port 3000..."
-        lsof -ti:3000 | xargs kill -9 2>/dev/null || true
-        echo -e "${GREEN}✓${NC} Port 3000 is now free"
-        echo ""
-    else
-        echo "Please free port 3000 and try again."
-        exit 1
-    fi
+# Function to find an available port starting from a given port
+find_available_port() {
+    local port=$1
+    local max_port=$((port + 100))  # Try up to 100 ports
+    
+    while [ $port -le $max_port ]; do
+        if ! lsof -Pi :$port -sTCP:LISTEN -t >/dev/null 2>&1; then
+            echo $port
+            return 0
+        fi
+        port=$((port + 1))
+    done
+    
+    echo ""
+    return 1
+}
+
+# Find an available port starting from 3000
+echo "🔍 Searching for an available port..."
+PORT=$(find_available_port 3000)
+
+if [ -z "$PORT" ]; then
+    echo -e "${YELLOW}⚠️  Could not find an available port between 3000-3100${NC}"
+    echo "Please free some ports and try again."
+    exit 1
 fi
 
-echo -e "${BLUE}🌐 Starting ChairShare preview on http://localhost:3000${NC}"
+if [ "$PORT" != "3000" ]; then
+    echo -e "${YELLOW}⚠️  Port 3000 is in use, using port $PORT instead${NC}"
+else
+    echo -e "${GREEN}✓${NC} Port 3000 is available"
+fi
+echo ""
+
+# Export PORT for npm start
+export PORT
+
+echo -e "${BLUE}🌐 Starting ChairShare preview on http://localhost:$PORT${NC}"
 echo ""
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}   The application will open in your browser shortly...${NC}"
@@ -79,7 +100,8 @@ sleep 2
 
 # Open browser based on OS
 open_browser() {
-    local url="http://localhost:3000"
+    local port=$1
+    local url="http://localhost:$port"
     
     # Wait for the server to start
     echo "⏳ Waiting for server to start..."
@@ -102,7 +124,7 @@ open_browser() {
 }
 
 # Start browser opener in background
-open_browser &
+open_browser $PORT &
 
 # Start the development server
 npm start
