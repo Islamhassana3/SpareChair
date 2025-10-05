@@ -8,6 +8,7 @@ ChairShare is an Airbnb-style platform for service-based businesses with unused 
 
 [![Preview on localhost:3000](https://img.shields.io/badge/🚀_Preview-localhost:3000-blue?style=for-the-badge)](http://localhost:3000)
 [![Quick Start Guide](https://img.shields.io/badge/📖_Guide-Quick_Start-green?style=for-the-badge)](./QUICKSTART.md)
+[![Preview Guide](https://img.shields.io/badge/📘_Preview-Guide-orange?style=for-the-badge)](./PREVIEW_GUIDE.md)
 
 ### 🎯 Launch Methods
 
