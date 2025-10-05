@@ -108,6 +108,5 @@ timeout /t 2 /nobreak >nul
 REM Start browser in background after a delay
 start "" cmd /c "timeout /t 5 /nobreak >nul && start http://localhost:%PORT%"
 
-REM Start the development server
-set PORT=%PORT%
+REM Start the development server with PORT environment variable
 call npm start
