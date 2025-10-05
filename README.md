@@ -2,6 +2,38 @@
 
 ChairShare is an Airbnb-style platform for service-based businesses with unused space. Salon owners, therapists, or studios can list spare chairs or rooms, set availability and pricing, and earn from underused capacity. Freelancers book spaces flexibly by the hour or day, with secure payments, ID verification, and reviews.
 
+## 🚀 Quick Preview
+
+**Want to see ChairShare in action?** Launch the preview with one click!
+
+[![Preview on localhost:3000](https://img.shields.io/badge/🚀_Preview-localhost:3000-blue?style=for-the-badge)](http://localhost:3000)
+[![Quick Start Guide](https://img.shields.io/badge/📖_Guide-Quick_Start-green?style=for-the-badge)](./QUICKSTART.md)
+
+### 🎯 Launch Methods
+
+Choose your platform and run the preview script:
+
+**🐧 Linux / 🍎 macOS:**
+```bash
+./preview.sh
+```
+
+**🪟 Windows (Command Prompt):**
+```cmd
+preview.bat
+```
+
+**🪟 Windows (PowerShell):**
+```powershell
+.\preview.ps1
+```
+
+**💡 What happens:**
+- ✅ Automatically checks and installs dependencies
+- ✅ Navigates to the frontend directory
+- ✅ Starts the development server on port 3000
+- ✅ Opens the application in your default browser
+
 ## 🚀 Quick Start
 
 **New to ChairShare?** Get up and running in 5 minutes with our [Quick Start Guide](./QUICKSTART.md)!
